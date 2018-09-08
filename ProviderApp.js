@@ -1,6 +1,8 @@
 import React from 'react';
 import firebase from 'firebase';
+import { translate } from 'react-i18next';
 
+import i18n from './src/locale/i18n';
 import { createRootNavigator } from './src/navigation/routes';
 
 class ProviderApp extends React.Component {
@@ -30,7 +32,14 @@ class ProviderApp extends React.Component {
   }
   render() {
     const RootNavigator = createRootNavigator(this.state.userLogged);
-    return <RootNavigator />;
+    const WrappedStack = ({t}) => {
+      return <RootNavigator screenProps={{ t }} />;
+    }
+    const ReloadAppOnLanguageChange = translate('common', {
+      bindI18n: 'languageChanged',
+      bindStore: false
+    })(WrappedStack);
+    return <ReloadAppOnLanguageChange />;
   }
 }
 

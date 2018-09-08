@@ -3,6 +3,7 @@ import { View, Text } from 'react-native';
 import { connect } from 'react-redux';
 import { reduxForm, Field } from 'redux-form';
 import { FormLabel, FormInput, FormValidationMessage, Button } from 'react-native-elements';
+import { translate } from 'react-i18next';
 
 import { validateEmptyInput, validateMail } from '../../common/forms/functions';
 
@@ -26,9 +27,11 @@ class Signup extends Component {
 
   render() {
     const { handleSubmit } = this.props;
+    const { t, i18n, navigation } = this.props;
     return (
       <View>
-
+        <Text>{t('common:currentLanguage', { lng: i18n.language })}</Text>
+        <Text>{t('introduction')}</Text>
         <Field
           style={{ marginTop: 10 }}
           name='username'
@@ -55,7 +58,14 @@ class Signup extends Component {
           onPress={handleSubmit(this.handleFormSubmit.bind(this))}
           title='ÜYE OL'
         />
-
+        <Button
+          onPress={() => { i18n.changeLanguage('en') }}
+          title={t('common:actions.toggleToEnglish')}
+        />
+        <Button
+          onPress={() => { i18n.changeLanguage('de') }}
+          title={t('common:actions.toggleToGerman')}
+        />
         {this.props.errorMessage && <FormValidationMessage>{this.props.errorMessage}</FormValidationMessage>}
 
       </View>
@@ -77,4 +87,4 @@ const SignupForm = reduxForm({
   validate
 })(Signup);
 
-export default connect(null, null)(SignupForm);
+export default translate(['home', 'common'], { wait: true })(connect(null, null)(SignupForm));
