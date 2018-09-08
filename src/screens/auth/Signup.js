@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, Text } from 'react-native';
+import { View, Text, Picker } from 'react-native';
 import { connect } from 'react-redux';
 import { reduxForm, Field } from 'redux-form';
 import { FormLabel, FormInput, FormValidationMessage, Button } from 'react-native-elements';
@@ -21,11 +21,19 @@ const renderField = ({ input, placeholder, keyboardType, secureTextEntry, meta: 
 );
 
 class Signup extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      language : 'en'
+    }
+  }
+
   handleFormSubmit(values) {
     console.log(values);
   }
 
   render() {
+    // console.log(this.state.language);
     const { handleSubmit } = this.props;
     const { t, i18n, navigation } = this.props;
     return (
@@ -53,6 +61,14 @@ class Signup extends Component {
           placeholder="Şifre Tekrarı"
           component={renderField}
         />
+
+        <Picker
+          selectedValue={this.state.language}
+          style={{ height: 50, width: 100 }}
+          onValueChange={(itemValue, itemIndex) => {this.setState({ language: itemValue }); i18n.changeLanguage(itemValue)}}>
+          <Picker.Item label="English" value="en" />
+          <Picker.Item label="Turkish" value="tr" />
+        </Picker>
 
         <Button
           onPress={handleSubmit(this.handleFormSubmit.bind(this))}
