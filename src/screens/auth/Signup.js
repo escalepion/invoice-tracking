@@ -63,8 +63,8 @@ class Signup extends Component {
           title={t('common:actions.toggleToEnglish')}
         />
         <Button
-          onPress={() => { i18n.changeLanguage('de') }}
-          title={t('common:actions.toggleToGerman')}
+          onPress={() => { i18n.changeLanguage('tr') }}
+          title={t('common:actions.toggleToTurkish')}
         />
         {this.props.errorMessage && <FormValidationMessage>{this.props.errorMessage}</FormValidationMessage>}
 
