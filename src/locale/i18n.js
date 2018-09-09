@@ -2,7 +2,7 @@ import i18n from 'i18next';
 import { reactI18nextModule } from 'react-i18next';
 import Expo from 'expo';
 
-import en from './en';
+import en_Us from './en_Us';
 import tr from './tr';
 
 // creating a language detection plugin using expo
@@ -19,10 +19,10 @@ i18n
   .use(languageDetector)
   .use(reactI18nextModule)
   .init({
-    fallbackLng: 'en',
+    fallbackLng: 'tr',
 
     resources: {
-      en,
+      en_Us,
       tr
     },
 

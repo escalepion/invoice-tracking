@@ -43,10 +43,7 @@ export const DrawNav = createDrawerNavigator(
 
 export const LoggedOut = createStackNavigator({
   Signup: {
-    screen: Signup,
-    navigationOptions: {
-      title: 'Signup'
-    }
+    screen: Signup
   },
   LogIn: {
     screen: LogIn,

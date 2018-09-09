@@ -1,18 +1,21 @@
+import keyValues from './keyValues';
+
 export default {
-  home: {
-    title: 'Hoş Geldiniz',
-    introduction: 'Bu metin i18n den gelmektedir ve Türkçedir'
-  },
-  page2: {
-    title: 'Sayfa 2',
-    introduction: 'Bu metin sayfa 2 de'
-  },
-  common: {
-    currentLanguage: 'Geçerli dil : "{{lng}}"',
-    actions: {
-      toggleToTurkish: 'Türkçe',
-      toggleToEnglish: 'English',
-      goToPage2: 'Sayfa 2'
+  [keyValues.pages] : {
+    [keyValues.signup]: {
+      [keyValues.title] : 'Üye Ol'
     }
+  },
+  [keyValues.common]: {
+    [keyValues.current_language]: 'Geçerli dil : "{{lng}}"',
+    [keyValues.turkish]: 'Türkçe',
+    [keyValues.english]: 'English',
+  },
+  [keyValues.forms]: {
+    [keyValues.username]: 'Kullanıcı Adı',
+    [keyValues.password]: 'Şifre',
+    [keyValues.password_again]: 'Şifre Tekrarı',
+    [keyValues.form_signup_button]: 'Üye Ol',
+    [keyValues.form_signin_button]: 'Giriş Yap'
   }
 };
