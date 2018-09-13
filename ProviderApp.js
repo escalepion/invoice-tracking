@@ -5,10 +5,13 @@ import { translate } from 'react-i18next';
 import i18n from './src/locale/i18n';
 import { createRootNavigator } from './src/navigation/routes';
 
+import FullPageSpinner from './src/common/FullPageSpinner';
+
 class ProviderApp extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
+      loading: true,
       userLogged: false
     }
   }
@@ -24,9 +27,9 @@ class ProviderApp extends React.Component {
     firebase.initializeApp(config);
     firebase.auth().onAuthStateChanged((user) => {
       if (user) {
-        this.setState({ userLogged: true });
+        this.setState({ userLogged: true, loading: false });
       } else {
-        this.setState({ loading: false });
+        this.setState({ userLogged: false, loading: false });
       }
     });
   }
@@ -39,6 +42,9 @@ class ProviderApp extends React.Component {
       bindI18n: 'languageChanged',
       bindStore: false
     })(WrappedStack);
+    if(this.state.loading) {
+      return <FullPageSpinner />;
+    }
     return <ReloadAppOnLanguageChange />;
   }
 }

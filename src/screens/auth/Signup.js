@@ -1,10 +1,12 @@
 import React, { Component } from 'react';
-import { View, Text, Picker } from 'react-native';
+import { View, Picker } from 'react-native';
 import { connect } from 'react-redux';
-import { reduxForm, Field } from 'redux-form';
+import { reduxForm, Field, reset } from 'redux-form';
 import { Button } from 'react-native-elements';
 import { translate } from 'react-i18next';
+import firebase from 'firebase';
 
+import i18n from '../../locale/i18n';
 import tKeyValues from '../../locale/keyValues';
 import { validateEmptyInput, validateMail } from '../../common/forms/functions';
 import { renderField } from '../../common/forms/formElements';
@@ -13,7 +15,7 @@ class Signup extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      language : 'en'
+      language: 'en'
     }
   }
 
@@ -21,32 +23,37 @@ class Signup extends Component {
     title: screenProps.t(`${tKeyValues.pages}:${tKeyValues.signup}.${tKeyValues.title}`)
   });
 
-  handleFormSubmit(values) {
-    console.log(values);
+  handleFormSubmit({email, password}) {
+    this.props.dispatch({ type: 'SIGN_UP_REQUEST', email, password });
   }
 
   render() {
-    // console.log(this.state.language);
-    const { handleSubmit } = this.props;
-    const { t, i18n, navigation } = this.props;
+    const { handleSubmit, t, i18n, navigation, dispatch } = this.props;
     return (
       <View>
         {/* <Text>{t(`${tKeyValues.common}:${tKeyValues.current_language}`, { lng: i18n.language })}</Text> */}
         <Field
-          style={{ marginTop: 10 }}
           name='username'
-          label = {t(`${tKeyValues.forms}:${tKeyValues.username}`)}
-          placeholder= {t(`${tKeyValues.forms}:${tKeyValues.username}`)}
+          label={t(`${tKeyValues.forms}:${tKeyValues.username}`)}
+          placeholder={t(`${tKeyValues.forms}:${tKeyValues.username}`)}
           component={renderField}
           validate={validateEmptyInput}
         />
-
+        <Field
+          name='email'
+          label={t(`${tKeyValues.forms}:${tKeyValues.email}`)}
+          placeholder={t(`${tKeyValues.forms}:${tKeyValues.email}`)}
+          keyboardType='email-address'
+          component={renderField}
+          validate={[validateMail, validateEmptyInput]}
+        />
         <Field
           secureTextEntry
           name='password'
           label={t(`${tKeyValues.forms}:${tKeyValues.password}`)}
           placeholder={t(`${tKeyValues.forms}:${tKeyValues.password}`)}
           component={renderField}
+          validate={validateEmptyInput}
         />
 
         <Field
@@ -55,12 +62,13 @@ class Signup extends Component {
           label={t(`${tKeyValues.forms}:${tKeyValues.password_again}`)}
           placeholder={t(`${tKeyValues.forms}:${tKeyValues.password_again}`)}
           component={renderField}
+          validate={validateEmptyInput}
         />
 
         <Picker
           selectedValue={this.state.language}
           style={{ height: 50, width: '100%' }}
-          onValueChange={(itemValue, itemIndex) => {this.setState({ language: itemValue }); i18n.changeLanguage(itemValue)}}>
+          onValueChange={(itemValue, itemIndex) => { this.setState({ language: itemValue }); i18n.changeLanguage(itemValue); dispatch(reset('signup')); }}>
           <Picker.Item label={t(`${tKeyValues.common}:${tKeyValues.turkish}`)} value="tr" />
           <Picker.Item label={t(`${tKeyValues.common}:${tKeyValues.english}`)} value="en_Us" />
         </Picker>
@@ -79,7 +87,7 @@ class Signup extends Component {
 function validate(values) {
   const errors = {};
   if (values.password !== values.passwordConfirm) {
-    errors.passwordConfirm = 'Password must match!';
+    errors.passwordConfirm = i18n.t(`${tKeyValues.errors}:${tKeyValues.password_confirmation_error}`);
   }
 
   return errors;

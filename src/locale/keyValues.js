@@ -13,8 +13,15 @@ export default {
   //forms
   forms: 'forms',
   username: 'username',
+  email: 'email',
   password: 'password',
   password_again: 'password_again',
   form_signup_button: 'form_signup_button',
-  form_signin_button: 'form_signin_button'
+  form_signin_button: 'form_signin_button',
+
+  //errors-feedbacks
+  errors: 'errors',
+  email_form_type_error: 'email_form_type_error',
+  input_form_empty_error: 'input_form_empty_error',
+  password_confirmation_error: 'password_confirmation_error'
 } 
