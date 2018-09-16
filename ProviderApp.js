@@ -1,8 +1,6 @@
 import React from 'react';
 import firebase from 'firebase';
 import { translate } from 'react-i18next';
-
-import i18n from './src/locale/i18n';
 import { createRootNavigator } from './src/navigation/routes';
 
 import FullPageSpinner from './src/common/FullPageSpinner';
@@ -15,7 +13,7 @@ class ProviderApp extends React.Component {
       userLogged: false
     }
   }
-  componentWillMount() {
+  componentDidMount() {
     const config = {
       apiKey: 'AIzaSyDUklbfVJX7MLVJoFlX5S-gerLeNXyEM6Y',
       authDomain: 'bill-9f1de.firebaseapp.com',

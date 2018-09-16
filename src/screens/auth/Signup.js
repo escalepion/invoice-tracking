@@ -2,9 +2,8 @@ import React, { Component } from 'react';
 import { View, Picker } from 'react-native';
 import { connect } from 'react-redux';
 import { reduxForm, Field, reset } from 'redux-form';
-import { Button } from 'react-native-elements';
+import { Button, FormValidationMessage } from 'react-native-elements';
 import { translate } from 'react-i18next';
-import firebase from 'firebase';
 
 import i18n from '../../locale/i18n';
 import tKeyValues from '../../locale/keyValues';
@@ -15,20 +14,26 @@ class Signup extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      language: 'en'
+      language: i18n.language
     }
   }
 
-  static navigationOptions = ({ navigation, screenProps }) => ({
+  static navigationOptions = ({ screenProps }) => ({
     title: screenProps.t(`${tKeyValues.pages}:${tKeyValues.signup}.${tKeyValues.title}`)
   });
 
-  handleFormSubmit({email, password}) {
-    this.props.dispatch({ type: 'SIGN_UP_REQUEST', email, password });
+  handleFormSubmit({email, password, username}) {
+    this.props.dispatch({ type: 'SIGN_UP_REQUEST', email, password, username });
+  }
+
+  handlePicker(itemValue) {
+    this.setState({ language: itemValue });
+    this.props.i18n.changeLanguage(itemValue);
+    this.props.dispatch(reset('signup'));
   }
 
   render() {
-    const { handleSubmit, t, i18n, navigation, dispatch } = this.props;
+    const { handleSubmit, t, dispatch } = this.props;
     return (
       <View>
         {/* <Text>{t(`${tKeyValues.common}:${tKeyValues.current_language}`, { lng: i18n.language })}</Text> */}
@@ -68,9 +73,9 @@ class Signup extends Component {
         <Picker
           selectedValue={this.state.language}
           style={{ height: 50, width: '100%' }}
-          onValueChange={(itemValue, itemIndex) => { this.setState({ language: itemValue }); i18n.changeLanguage(itemValue); dispatch(reset('signup')); }}>
-          <Picker.Item label={t(`${tKeyValues.common}:${tKeyValues.turkish}`)} value="tr" />
-          <Picker.Item label={t(`${tKeyValues.common}:${tKeyValues.english}`)} value="en_Us" />
+          onValueChange={ itemValue => this.handlePicker(itemValue) }>
+          <Picker.Item label={t(`${tKeyValues.common}:${tKeyValues.turkish}`)} value="tr_TR" />
+          <Picker.Item label={t(`${tKeyValues.common}:${tKeyValues.english}`)} value="en_US" />
         </Picker>
 
         <Button

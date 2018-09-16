@@ -10,7 +10,6 @@ export const LoggedIn = createStackNavigator({
   Index: {
     screen: Index,
     navigationOptions: {
-      title: 'Home',
       headerLeft: null
     }
   }
@@ -46,10 +45,7 @@ export const LoggedOut = createStackNavigator({
     screen: Signup
   },
   LogIn: {
-    screen: LogIn,
-    navigationOptions: {
-      title: 'Login'
-    }
+    screen: LogIn
   }
 });
 

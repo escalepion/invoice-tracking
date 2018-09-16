@@ -2,15 +2,15 @@ import i18n from 'i18next';
 import { reactI18nextModule } from 'react-i18next';
 import Expo from 'expo';
 
-import en_Us from './en_Us';
-import tr from './tr';
+import en_US from './en_US';
+import tr_TR from './tr_TR';
 
 // creating a language detection plugin using expo
 // http://i18next.com/docs/ownplugin/#languagedetector
 const languageDetector = {
   type: 'languageDetector',
   async: true, // flags below detection to be async
-  detect: (callback) => { return /*'en'; */ Expo.DangerZone.Localization.getCurrentLocaleAsync().then(lng => { callback(lng.replace('_', '-')); }) },
+  detect: (callback) => { return /*'en'; */ Expo.DangerZone.Localization.getCurrentLocaleAsync().then(lng => { callback(lng); }) },
   init: () => {},
   cacheUserLanguage: () => {}
 }
@@ -19,11 +19,11 @@ i18n
   .use(languageDetector)
   .use(reactI18nextModule)
   .init({
-    fallbackLng: 'tr',
+    fallbackLng: 'en_US',
 
     resources: {
-      en_Us,
-      tr
+      tr_TR,
+      en_US
     },
 
     // have a common namespace used around the full app
