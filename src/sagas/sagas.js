@@ -5,9 +5,9 @@ export function* rootSaga() {
   yield takeLatest("SIGN_UP_REQUEST", signup);
 }
 
-function* signup({email, password, username}) {
+function* signup({email, password, username, language}) {
   try {
-    const response = yield call(signupApi, email, password, username);
+    const response = yield call(signupApi, email, password, username, language);
     const dog = response;
 
     console.log('signup succeed dog user: ' , dog.user);

@@ -23,7 +23,7 @@ class Signup extends Component {
   });
 
   handleFormSubmit({email, password, username}) {
-    this.props.dispatch({ type: 'SIGN_UP_REQUEST', email, password, username });
+    this.props.dispatch({ type: 'SIGN_UP_REQUEST', email, password, username, language : this.state.language });
   }
 
   handlePicker(itemValue) {
