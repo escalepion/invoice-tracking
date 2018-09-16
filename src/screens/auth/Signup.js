@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
-import { View, Picker } from 'react-native';
+import { Header } from 'react-navigation';
+import { KeyboardAvoidingView, ScrollView, Picker } from 'react-native';
 import { connect } from 'react-redux';
 import { reduxForm, Field, reset } from 'redux-form';
 import { Button, FormValidationMessage } from 'react-native-elements';
@@ -22,8 +23,8 @@ class Signup extends Component {
     title: screenProps.t(`${tKeyValues.pages}:${tKeyValues.signup}.${tKeyValues.title}`)
   });
 
-  handleFormSubmit({email, password, username}) {
-    this.props.dispatch({ type: 'SIGN_UP_REQUEST', email, password, username, language : this.state.language });
+  handleFormSubmit({ email, password, username }) {
+    this.props.dispatch({ type: 'SIGN_UP_REQUEST', email, password, username, language: this.state.language });
   }
 
   handlePicker(itemValue) {
@@ -35,56 +36,63 @@ class Signup extends Component {
   render() {
     const { handleSubmit, t, dispatch } = this.props;
     return (
-      <View>
-        {/* <Text>{t(`${tKeyValues.common}:${tKeyValues.current_language}`, { lng: i18n.language })}</Text> */}
-        <Field
-          name='username'
-          label={t(`${tKeyValues.forms}:${tKeyValues.username}`)}
-          placeholder={t(`${tKeyValues.forms}:${tKeyValues.username}`)}
-          component={renderField}
-          validate={validateEmptyInput}
-        />
-        <Field
-          name='email'
-          label={t(`${tKeyValues.forms}:${tKeyValues.email}`)}
-          placeholder={t(`${tKeyValues.forms}:${tKeyValues.email}`)}
-          keyboardType='email-address'
-          component={renderField}
-          validate={[validateMail, validateEmptyInput]}
-        />
-        <Field
-          secureTextEntry
-          name='password'
-          label={t(`${tKeyValues.forms}:${tKeyValues.password}`)}
-          placeholder={t(`${tKeyValues.forms}:${tKeyValues.password}`)}
-          component={renderField}
-          validate={validateEmptyInput}
-        />
+      <KeyboardAvoidingView
+        keyboardVerticalOffset={Header.HEIGHT + 60}
+        style={{ flex: 1 }}
+        behavior="padding" >
+        <ScrollView>
 
-        <Field
-          secureTextEntry
-          name='passwordConfirm'
-          label={t(`${tKeyValues.forms}:${tKeyValues.password_again}`)}
-          placeholder={t(`${tKeyValues.forms}:${tKeyValues.password_again}`)}
-          component={renderField}
-          validate={validateEmptyInput}
-        />
+          <Field
+            name='username'
+            label={t(`${tKeyValues.forms}:${tKeyValues.username}`)}
+            placeholder={t(`${tKeyValues.forms}:${tKeyValues.username}`)}
+            component={renderField}
+            validate={validateEmptyInput}
+          />
+          <Field
+            name='email'
+            label={t(`${tKeyValues.forms}:${tKeyValues.email}`)}
+            placeholder={t(`${tKeyValues.forms}:${tKeyValues.email}`)}
+            keyboardType='email-address'
+            component={renderField}
+            validate={[validateMail, validateEmptyInput]}
+          />
+          <Field
+            secureTextEntry
+            name='password'
+            label={t(`${tKeyValues.forms}:${tKeyValues.password}`)}
+            placeholder={t(`${tKeyValues.forms}:${tKeyValues.password}`)}
+            component={renderField}
+            validate={validateEmptyInput}
+          />
 
-        <Picker
-          selectedValue={this.state.language}
-          style={{ height: 50, width: '100%' }}
-          onValueChange={ itemValue => this.handlePicker(itemValue) }>
-          <Picker.Item label={t(`${tKeyValues.common}:${tKeyValues.turkish}`)} value="tr_TR" />
-          <Picker.Item label={t(`${tKeyValues.common}:${tKeyValues.english}`)} value="en_US" />
-        </Picker>
+          <Field
+            secureTextEntry
+            name='passwordConfirm'
+            label={t(`${tKeyValues.forms}:${tKeyValues.password_again}`)}
+            placeholder={t(`${tKeyValues.forms}:${tKeyValues.password_again}`)}
+            component={renderField}
+            validate={validateEmptyInput}
+          />
 
-        <Button
-          onPress={handleSubmit(this.handleFormSubmit.bind(this))}
-          title={t(`${tKeyValues.forms}:${tKeyValues.form_signup_button}`)}
-        />
-        {this.props.errorMessage && <FormValidationMessage>{this.props.errorMessage}</FormValidationMessage>}
+          <Picker
+            selectedValue={this.state.language}
+            style={{ height: 50, width: '100%' }}
+            onValueChange={itemValue => this.handlePicker(itemValue)}>
+            <Picker.Item label={t(`${tKeyValues.common}:${tKeyValues.turkish}`)} value="tr_TR" />
+            <Picker.Item label={t(`${tKeyValues.common}:${tKeyValues.english}`)} value="en_US" />
+          </Picker>
 
-      </View>
+          <Button
+            raised
+            buttonStyle={{ backgroundColor: 'blue' }}
+            onPress={handleSubmit(this.handleFormSubmit.bind(this))}
+            title={t(`${tKeyValues.forms}:${tKeyValues.form_signup_button}`)}
+          />
+          {this.props.errorMessage && <FormValidationMessage>{this.props.errorMessage}</FormValidationMessage>}
+        
+        </ScrollView>
+      </KeyboardAvoidingView>
     );
   }
 }
