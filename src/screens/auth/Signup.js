@@ -112,7 +112,9 @@ const loginButtonColor = '#8AC24A';
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1
+    flex: 1,
+    paddingTop: 20,
+    paddingBottom: 20
   },
   submitButton: {
     backgroundColor: blueColor
