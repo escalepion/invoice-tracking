@@ -2,6 +2,7 @@ export default {
   //pages
   pages: 'pages',
   signup : 'signup',
+  login: 'login',
 
   //common
   common: 'common',
@@ -9,6 +10,7 @@ export default {
   current_language : 'current_language',
   turkish: 'turkish',
   english: 'english',
+  loading: 'loading',
 
   //forms
   forms: 'forms',

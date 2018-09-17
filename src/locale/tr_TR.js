@@ -4,12 +4,16 @@ export default {
   [keyValues.pages] : {
     [keyValues.signup]: {
       [keyValues.title] : 'Üye Ol'
+    },
+    [keyValues.login]: {
+      [keyValues.title] : 'Giriş Yap'
     }
   },
   [keyValues.common]: {
     [keyValues.current_language]: 'Geçerli dil : "{{lng}}"',
     [keyValues.turkish]: 'Türkçe',
     [keyValues.english]: 'English',
+    [keyValues.loading] : 'Yükleniyor'
   },
   [keyValues.forms]: {
     [keyValues.username]: 'Kullanıcı Adı',

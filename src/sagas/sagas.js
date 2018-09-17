@@ -1,20 +1,21 @@
-import { takeLatest, call } from "redux-saga/effects";
+import { takeLatest, call, put } from "redux-saga/effects";
 import { signupApi } from '../services';
+import {
+  SIGN_UP_REQUEST,
+  SIGN_UP_LOADING
+} from './types';
 
 export function* rootSaga() {
-  yield takeLatest("SIGN_UP_REQUEST", signup);
+  yield takeLatest(SIGN_UP_REQUEST, signup);
 }
 
 function* signup({email, password, username, language}) {
+  yield put({ type: SIGN_UP_LOADING, payload: true });
   try {
-    const response = yield call(signupApi, email, password, username, language);
-    const dog = response;
-
-    console.log('signup succeed dog user: ' , dog.user);
-    // yield put({ type: "API_CALL_SUCCESS", dog });
+    yield call(signupApi, email, password, username, language);
+    yield put({ type: SIGN_UP_LOADING, payload: false });
   
   } catch (error) {
-    console.log('signup failed: ' ,error);
-    // yield put({ type: "API_CALL_FAILURE", error });
+    yield put({ type: SIGN_UP_LOADING, payload: false });
   }
 }

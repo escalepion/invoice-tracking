@@ -10,6 +10,7 @@ class Index extends Component {
       .catch(error => console.log(error));
   }
   render() {
+    console.log(firebase.auth().currentUser);
     return (
       <View>
         <Button

@@ -4,12 +4,16 @@ export default {
   [keyValues.pages] : {
     [keyValues.signup]: {
       [keyValues.title] : 'Signup'
+    },
+    [keyValues.login]: {
+      [keyValues.title] : 'Login'
     }
   },
   [keyValues.common]: {
     [keyValues.current_language]: 'The current language is "{{lng}}"',
     [keyValues.turkish]: 'Türkçe',
     [keyValues.english]: 'English',
+    [keyValues.loading]: 'Loading'
   },
   [keyValues.forms]: {
     [keyValues.username]: 'Username',

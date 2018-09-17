@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Header } from 'react-navigation';
-import { KeyboardAvoidingView, ScrollView, Picker } from 'react-native';
+import { KeyboardAvoidingView, ScrollView, Picker, StyleSheet, Text } from 'react-native';
 import { connect } from 'react-redux';
 import { reduxForm, Field, reset } from 'redux-form';
 import { Button, FormValidationMessage } from 'react-native-elements';
@@ -27,6 +27,10 @@ class Signup extends Component {
     this.props.dispatch({ type: 'SIGN_UP_REQUEST', email, password, username, language: this.state.language });
   }
 
+  handleLoginClicked() {
+    this.props.navigation.navigate('LogIn');
+  }
+
   handlePicker(itemValue) {
     this.setState({ language: itemValue });
     this.props.i18n.changeLanguage(itemValue);
@@ -34,13 +38,13 @@ class Signup extends Component {
   }
 
   render() {
-    const { handleSubmit, t, dispatch } = this.props;
+    const { handleSubmit, t, auth } = this.props;
     return (
       <KeyboardAvoidingView
         keyboardVerticalOffset={Header.HEIGHT + 60}
-        style={{ flex: 1 }}
+        style={styles.container}
         behavior="padding" >
-        <ScrollView>
+        <ScrollView keyboardShouldPersistTaps='handled'>
 
           <Field
             name='username'
@@ -77,7 +81,7 @@ class Signup extends Component {
 
           <Picker
             selectedValue={this.state.language}
-            style={{ height: 50, width: '100%' }}
+            style={styles.pickerStyle}
             onValueChange={itemValue => this.handlePicker(itemValue)}>
             <Picker.Item label={t(`${tKeyValues.common}:${tKeyValues.turkish}`)} value="tr_TR" />
             <Picker.Item label={t(`${tKeyValues.common}:${tKeyValues.english}`)} value="en_US" />
@@ -85,9 +89,15 @@ class Signup extends Component {
 
           <Button
             raised
-            buttonStyle={{ backgroundColor: 'blue' }}
+            disabled = {auth.signupLoading}
+            buttonStyle={styles.submitButton}
             onPress={handleSubmit(this.handleFormSubmit.bind(this))}
-            title={t(`${tKeyValues.forms}:${tKeyValues.form_signup_button}`)}
+            title={auth.signupLoading ? i18n.t(`${tKeyValues.loading}`) : t(`${tKeyValues.forms}:${tKeyValues.form_signup_button}`)}
+          />
+          <Button 
+            buttonStyle={styles.loginButton}
+            onPress={this.handleLoginClicked.bind(this)}
+            title = {i18n.t(`${tKeyValues.pages}:${tKeyValues.login}.${tKeyValues.title}`)} 
           />
           {this.props.errorMessage && <FormValidationMessage>{this.props.errorMessage}</FormValidationMessage>}
         
@@ -96,6 +106,27 @@ class Signup extends Component {
     );
   }
 }
+
+const blueColor = '#0000FF';
+const loginButtonColor = '#8AC24A';
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1
+  },
+  submitButton: {
+    backgroundColor: blueColor
+  },
+  pickerStyle: {
+    height: 50,
+    marginRight: 10,
+    marginLeft: 10
+  },
+  loginButton: {
+    marginTop: 20,
+    backgroundColor: loginButtonColor
+  }
+});
 
 function validate(values) {
   const errors = {};
@@ -106,9 +137,13 @@ function validate(values) {
   return errors;
 }
 
+const mapStateToProps = (state) => {
+  return { auth : state.auth };
+};
+
 const SignupForm = reduxForm({
   form: 'signup',
   validate
 })(Signup);
 
-export default translate([`${tKeyValues.pages}`, `${tKeyValues.common}`, `${tKeyValues.forms}`], { wait: true })(connect(null, null)(SignupForm));
+export default translate([`${tKeyValues.pages}`, `${tKeyValues.common}`, `${tKeyValues.forms}`], { wait: true })(connect(mapStateToProps, null)(SignupForm));
