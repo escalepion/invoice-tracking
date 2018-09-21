@@ -21,7 +21,7 @@ export default {
     [keyValues.password]: 'Password',
     [keyValues.password_again]: 'Retype Password',
     [keyValues.form_signup_button]: 'Join Us',
-    [keyValues.form_signin_button]: 'Signin'
+    [keyValues.form_signin_button]: 'Login'
   },
   [keyValues.errors]: {
     [keyValues.email_form_type_error]: 'E-mail is not valid',

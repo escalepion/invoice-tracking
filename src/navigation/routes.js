@@ -41,11 +41,11 @@ export const DrawNav = createDrawerNavigator(
 );
 
 export const LoggedOut = createStackNavigator({
-  Signup: {
-    screen: Signup
-  },
   LogIn: {
     screen: LogIn
+  },
+  Signup: {
+    screen: Signup
   }
 });
 

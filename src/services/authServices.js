@@ -11,3 +11,10 @@ export function signupApi(email, password, username, language) {
     .catch(error => reject(error));
   });
 }
+export function signinApi(email, password) {
+  return new Promise((resolve, reject) => {
+    firebase.auth().signInWithEmailAndPassword(email, password)
+    .then(res => resolve(res))
+    .catch(error => reject(error));
+  });
+}

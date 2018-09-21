@@ -3,7 +3,7 @@ import { Header } from 'react-navigation';
 import { KeyboardAvoidingView, ScrollView, Picker, StyleSheet, Text } from 'react-native';
 import { connect } from 'react-redux';
 import { reduxForm, Field, reset } from 'redux-form';
-import { Button, FormValidationMessage } from 'react-native-elements';
+import { Button, FormValidationMessage, Card } from 'react-native-elements';
 import { translate } from 'react-i18next';
 
 import i18n from '../../locale/i18n';
@@ -20,7 +20,8 @@ class Signup extends Component {
   }
 
   static navigationOptions = ({ screenProps }) => ({
-    title: screenProps.t(`${tKeyValues.pages}:${tKeyValues.signup}.${tKeyValues.title}`)
+    title: screenProps.t(`${tKeyValues.pages}:${tKeyValues.signup}.${tKeyValues.title}`),
+    headerLeft: null
   });
 
   handleFormSubmit({ email, password, username }) {
@@ -45,7 +46,7 @@ class Signup extends Component {
         style={styles.container}
         behavior="padding" >
         <ScrollView keyboardShouldPersistTaps='handled'>
-
+        <Card containerStyle={styles.card}>
           <Field
             name='username'
             label={t(`${tKeyValues.forms}:${tKeyValues.username}`)}
@@ -97,10 +98,10 @@ class Signup extends Component {
           <Button 
             buttonStyle={styles.loginButton}
             onPress={this.handleLoginClicked.bind(this)}
-            title = {i18n.t(`${tKeyValues.pages}:${tKeyValues.login}.${tKeyValues.title}`)} 
+            title = {t(`${tKeyValues.forms}:${tKeyValues.form_signin_button}`)} 
           />
           {this.props.errorMessage && <FormValidationMessage>{this.props.errorMessage}</FormValidationMessage>}
-        
+        </Card>
         </ScrollView>
       </KeyboardAvoidingView>
     );
@@ -112,9 +113,12 @@ const loginButtonColor = '#8AC24A';
 
 const styles = StyleSheet.create({
   container: {
+    backgroundColor: '#ffffff',
     flex: 1,
-    paddingTop: 20,
-    paddingBottom: 20
+    paddingTop: 10
+  },
+  card: {
+    marginBottom: 20
   },
   submitButton: {
     backgroundColor: blueColor
