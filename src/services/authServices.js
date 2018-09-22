@@ -18,3 +18,14 @@ export function signinApi(email, password) {
     .catch(error => reject(error));
   });
 }
+
+export function fetchCurrentUserInfo(uid) {
+  return new Promise((resolve, reject) => {
+    firebase.database().ref(`users/${uid}`)
+    .once('value')
+    .then((snapshot) => {
+      resolve(snapshot.val())
+    })
+    .catch(err => reject(err));
+  });
+};

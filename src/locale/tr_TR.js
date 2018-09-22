@@ -13,7 +13,9 @@ export default {
     [keyValues.current_language]: 'Geçerli dil : "{{lng}}"',
     [keyValues.turkish]: 'Türkçe',
     [keyValues.english]: 'English',
-    [keyValues.loading] : 'Yükleniyor'
+    [keyValues.loading] : 'Yükleniyor',
+    [keyValues.home_welcome_tex]: "Merhaba!!! Henüz fatura eklemediniz. Bir tane ekleyerek başlayabilirsiniz.",
+    [keyValues.my_invoices]: 'Faturalarım'
   },
   [keyValues.forms]: {
     [keyValues.username]: 'Kullanıcı Adı',

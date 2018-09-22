@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Header } from 'react-navigation';
-import { KeyboardAvoidingView, ScrollView, Picker, StyleSheet, Text } from 'react-native';
+import { KeyboardAvoidingView, ScrollView, Picker, StyleSheet } from 'react-native';
 import { connect } from 'react-redux';
 import { reduxForm, Field, reset } from 'redux-form';
 import { Button, FormValidationMessage, Card } from 'react-native-elements';

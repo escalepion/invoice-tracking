@@ -13,7 +13,9 @@ export default {
     [keyValues.current_language]: 'The current language is "{{lng}}"',
     [keyValues.turkish]: 'Türkçe',
     [keyValues.english]: 'English',
-    [keyValues.loading]: 'Loading'
+    [keyValues.loading]: 'Loading',
+    [keyValues.home_welcome_tex]: "Hey !!! You don't have any invoices added yet. You can start adding new one.",
+    [keyValues.my_invoices]: 'My Incoives'
   },
   [keyValues.forms]: {
     [keyValues.username]: 'Username',

@@ -11,6 +11,8 @@ export default {
   turkish: 'turkish',
   english: 'english',
   loading: 'loading',
+  home_welcome_tex: 'home_welcome_tex',
+  my_invoices: 'my_invoices',
 
   //forms
   forms: 'forms',
