@@ -1,11 +1,13 @@
 import React from 'react';
-import {View, Text} from 'react-native';
+import { Button } from 'react-native-elements';
+import firebase from 'firebase';
 
 const Logout = () => {
   return (
-    <View>
-      <Text>Logout page</Text>
-    </View>
+    <Button
+    onPress={() => firebase.auth().signOut()}
+    title='Logout'
+  />
   );
 };
 

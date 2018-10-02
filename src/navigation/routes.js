@@ -5,6 +5,7 @@ import Index from '../screens/Index';
 import LogIn from '../screens/auth/LogIn';
 import Signup from '../screens/auth/Signup';
 import SignOut from '../screens/auth/SignOut';
+import AddCategory from '../screens/AddCategory';
 
 export const LoggedIn = createStackNavigator({
   Index: {
@@ -12,6 +13,9 @@ export const LoggedIn = createStackNavigator({
     navigationOptions: {
       headerLeft: null
     }
+  },
+  AddCategory: {
+    screen: AddCategory
   }
 });
 

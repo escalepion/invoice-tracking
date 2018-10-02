@@ -7,6 +7,9 @@ export default {
     },
     [keyValues.login]: {
       [keyValues.title] : 'Login'
+    },
+    [keyValues.home]: {
+      [keyValues.home] : 'Home'
     }
   },
   [keyValues.common]: {
@@ -15,7 +18,9 @@ export default {
     [keyValues.english]: 'English',
     [keyValues.loading]: 'Loading',
     [keyValues.home_welcome_tex]: "Hey !!! You don't have any invoices added yet. You can start adding new one.",
-    [keyValues.my_invoices]: 'My Incoives'
+    [keyValues.my_invoices]: 'My Incoives',
+    [keyValues.add_invoice_category_text]: 'Add Invoice Category',
+    [keyValues.invoice_name]: 'Invoice Name'
   },
   [keyValues.forms]: {
     [keyValues.username]: 'Username',

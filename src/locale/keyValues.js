@@ -3,6 +3,7 @@ export default {
   pages: 'pages',
   signup : 'signup',
   login: 'login',
+  home: 'home',
 
   //common
   common: 'common',
@@ -13,6 +14,9 @@ export default {
   loading: 'loading',
   home_welcome_tex: 'home_welcome_tex',
   my_invoices: 'my_invoices',
+  add_invoice_category_text: 'add_invoice_category_text',
+  add_category_title: 'add_category_title',
+  invoice_name: 'invoice_name',
 
   //forms
   forms: 'forms',

@@ -7,6 +7,9 @@ export default {
     },
     [keyValues.login]: {
       [keyValues.title] : 'Giriş Yap'
+    },
+    [keyValues.home]: {
+      [keyValues.home] : 'Ana Sayfa'
     }
   },
   [keyValues.common]: {
@@ -15,7 +18,9 @@ export default {
     [keyValues.english]: 'English',
     [keyValues.loading] : 'Yükleniyor',
     [keyValues.home_welcome_tex]: "Merhaba!!! Henüz fatura eklemediniz. Bir tane ekleyerek başlayabilirsiniz.",
-    [keyValues.my_invoices]: 'Faturalarım'
+    [keyValues.my_invoices]: 'Faturalarım',
+    [keyValues.add_invoice_category_text]: 'Fatura Kategorisi Ekle',
+    [keyValues.invoice_name]: 'Fatura İsmi'
   },
   [keyValues.forms]: {
     [keyValues.username]: 'Kullanıcı Adı',

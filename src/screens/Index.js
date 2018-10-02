@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { StyleSheet, View } from 'react-native';
 import { Button } from 'react-native-elements';
 import {connect} from 'react-redux';
 import firebase from 'firebase';
@@ -10,28 +11,41 @@ import MainCardContainer from '../common/MainCardContainer';
 import MainDefaultMessage from '../common/MainDefaultMessage';
 
 class Index extends Component {
+  static navigationOptions = ({ screenProps }) => ({
+    title: screenProps.t(`${keyValues.pages}:${keyValues.home}.${keyValues.home}`)
+  });
   componentDidMount() {
     const uid = firebase.auth().currentUser.uid;
     this.props.dispatch({ type: 'FETCH_CURRENT_USER_INFO', uid });
   }
-  onButtonPress() {
-    firebase.auth().signOut()
-      .then(() => console.log('logged out') )
-      .catch(error => console.log(error));
-  }
   render() {
-    console.log(this.props.auth.currentUser);
+    console.log('current user: ',this.props.auth.currentUser);
     return (
-      <MainCardContainer title={i18n.t(`${keyValues.my_invoices}`)}>
-        <MainDefaultMessage />
-        <Button
-          onPress={() => this.onButtonPress()}
-          title='Logout'
-        />
-      </MainCardContainer>
+      <View style={styles.container}>
+        <MainCardContainer title={i18n.t(keyValues.my_invoices)}>
+          <MainDefaultMessage />
+          <Button
+            buttonStyle= {styles.addButtonText}
+            onPress={() => this.props.navigation.navigate('AddCategory')}
+            title={i18n.t(keyValues.add_invoice_category_text)}
+          />
+        </MainCardContainer>
+      </View>
     );
   }
 }
+
+const styles = StyleSheet.create({
+  container: {
+    backgroundColor: '#ffffff',
+    flex: 1,
+    paddingTop: 10
+  },
+  addButtonText: {
+    backgroundColor: '#0000FF',
+    marginTop: 10
+  }
+});
 
 const mapStateToProps = (state) => {
   return { auth : state.auth };
