@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 import { KeyboardAvoidingView, ScrollView, StyleSheet } from 'react-native';
+import firebase from 'firebase';
+import { connect } from 'react-redux';
 import { reduxForm, Field } from 'redux-form';
 import { Header } from 'react-navigation';
 
@@ -7,10 +9,23 @@ import i18n from '../locale/i18n';
 import keyValues from '../locale/keyValues';
 import MainCardContainer from '../common/MainCardContainer';
 import { renderField } from '../common/forms/formElements';
+import { PrimaryButton } from '../common/Buttons';
 import { validateEmptyInput } from '../common/forms/functions';
+import { CREATE_CATEGORY } from '../sagas/types';
 
 class AddCategory extends Component {
+  componentDidUpdate() {
+    if(this.props.invoices.createCategorySuccess) {
+      this.props.navigation.navigate('Index');
+    }
+  }
+  onSubmit({ categoryName }) {
+    const uid = firebase.auth().currentUser.uid;
+    this.props.dispatch({ type: CREATE_CATEGORY, categoryName, uid });
+  }
   render() {
+    console.log(this.props.invoices);
+    const { handleSubmit } = this.props;
     return (
       <KeyboardAvoidingView
         keyboardVerticalOffset={Header.HEIGHT + 60}
@@ -20,11 +35,15 @@ class AddCategory extends Component {
         <ScrollView keyboardShouldPersistTaps='handled'>
           <MainCardContainer title={i18n.t(keyValues.add_invoice_category_text)}>
             <Field
-              name='username'
+              name='categoryName'
               label={i18n.t(keyValues.invoice_name)}
               placeholder={i18n.t(keyValues.invoice_name)}
               component={renderField}
               validate={validateEmptyInput}
+            />
+            <PrimaryButton 
+            onPress={handleSubmit(this.onSubmit.bind(this))}
+            title={i18n.t(keyValues.add)}
             />
           </MainCardContainer>
         </ScrollView>
@@ -41,8 +60,12 @@ const styles = StyleSheet.create({
   }
 });
 
+const mapStateToProps = (state) => {
+  return {invoices: state.invoices};
+};
+
 const AddCategoryForm = reduxForm({
   form: 'addCategory'
 })(AddCategory);
 
-export default AddCategoryForm;
+export default connect(mapStateToProps, null)(AddCategoryForm);

@@ -17,6 +17,7 @@ export default {
   add_invoice_category_text: 'add_invoice_category_text',
   add_category_title: 'add_category_title',
   invoice_name: 'invoice_name',
+  add: 'add',
 
   //forms
   forms: 'forms',

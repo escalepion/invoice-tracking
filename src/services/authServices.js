@@ -4,7 +4,7 @@ export function signupApi(email, password, username, language) {
   return new Promise((resolve, reject) => {
     firebase.auth().createUserWithEmailAndPassword(email, password)
     .then((res) => {
-      firebase.database().ref(`users/${res.user.uid}`).set({ username, language })
+      firebase.database().ref(`${res.user.uid}/userInfo`).set({ username, language })
       .then(() => resolve(res))
       .catch((error) => reject(error));
     })
@@ -21,7 +21,7 @@ export function signinApi(email, password) {
 
 export function fetchCurrentUserInfo(uid) {
   return new Promise((resolve, reject) => {
-    firebase.database().ref(`users/${uid}`)
+    firebase.database().ref(`${uid}/userInfo`)
     .once('value')
     .then((snapshot) => {
       resolve(snapshot.val())

@@ -20,7 +20,8 @@ export default {
     [keyValues.home_welcome_tex]: "Merhaba!!! Henüz fatura eklemediniz. Bir tane ekleyerek başlayabilirsiniz.",
     [keyValues.my_invoices]: 'Faturalarım',
     [keyValues.add_invoice_category_text]: 'Fatura Kategorisi Ekle',
-    [keyValues.invoice_name]: 'Fatura İsmi'
+    [keyValues.invoice_name]: 'Fatura İsmi',
+    [keyValues.add]: 'Ekle'
   },
   [keyValues.forms]: {
     [keyValues.username]: 'Kullanıcı Adı',
