@@ -22,10 +22,6 @@ class Index extends Component {
     this.props.dispatch({ type: 'FETCH_CURRENT_USER_INFO', uid });
     this.props.dispatch({ type: FETCH_CATEGORIES, uid });
   }
-  componentDidUpdate(prevProps) {
-    console.log(prevProps.invoices.categoryList);
-    console.log(this.props.invoices.categoryList);
-  }
   renderScreen() {
     if(this.props.invoices.categoryList.length === 0) {
       return (

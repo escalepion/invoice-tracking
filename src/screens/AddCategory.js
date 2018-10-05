@@ -11,11 +11,12 @@ import MainCardContainer from '../common/MainCardContainer';
 import { renderField } from '../common/forms/formElements';
 import { PrimaryButton } from '../common/Buttons';
 import { validateEmptyInput } from '../common/forms/functions';
-import { CREATE_CATEGORY } from '../sagas/types';
+import { CREATE_CATEGORY, CREATE_CATEGORY_SUCCESS } from '../sagas/types';
 
 class AddCategory extends Component {
   componentDidUpdate() {
     if(this.props.invoices.createCategorySuccess) {
+      this.props.dispatch({ type: CREATE_CATEGORY_SUCCESS, payload: false });
       this.props.navigation.navigate('Index');
     }
   }

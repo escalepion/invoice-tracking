@@ -1,4 +1,5 @@
 import firebase from 'firebase';
+import { eventChannel } from 'redux-saga';
 
 export function createCategoryApi(categoryName, uid) {
   return new Promise((resolve, reject) => {
@@ -8,11 +9,19 @@ export function createCategoryApi(categoryName, uid) {
   });
 }
 
-export function fetchCategoriesApi(uid) {
-  return new Promise((resolve) => {
-    firebase.database().ref(`${uid}/categories`)
-    .on('value', function(snapshot) {
-      resolve(snapshot.val());
-    })
-  });
+export function fetchCategoriesApi() {
+  const ref = firebase.database().ref('29ZPPTaIisUvMPZ8njGYqADKu0P2/categories')
+  const channel = eventChannel(emit => {
+      ref.on('value', snapshot => {
+        emit({ categories : snapshot.val()});
+      });
+      return () => ref.off();
+    })	
+  return channel; 
+  // return new Promise((resolve) => {
+  //   firebase.database().ref(`${uid}/categories`)
+  //   .on('value', function(snapshot) {
+  //     resolve(snapshot.val());
+  //   })
+  // });
 }

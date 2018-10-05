@@ -15,7 +15,7 @@ class Index extends Component {
           {
             this.props.categoryList.map((item) => (
               <ListItem
-                key={item.categoryName}
+                key={item.uid}
                 title={item.categoryName}
               />
             ))

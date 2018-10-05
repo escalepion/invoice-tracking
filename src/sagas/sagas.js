@@ -1,4 +1,4 @@
-import { takeEvery, takeLatest, call, put } from "redux-saga/effects";
+import { takeEvery, takeLatest, call, put, take } from "redux-saga/effects";
 import { 
   signupApi, 
   signinApi, 
@@ -74,18 +74,32 @@ function* createCategory({ categoryName, uid }) {
 }
 
 function* fetchCategories({ uid }) {
-  console.log('fetch categories triggered');
-  try {
-    let categories = yield call(fetchCategoriesApi, uid);
-    const arr = Object.keys(categories).map((key) => {
-      return {uid: key, categoryName: categories[key].categoryName };
-    });
+    const updateCategories = fetchCategoriesApi(uid);
+    while(true) {
+    let categories = yield take(updateCategories);
+    const categoryList = categories.categories;
+    let arr;
+    if(categoryList === null) {
+      arr = [];
+    }else {
+      arr = Object.keys(categoryList).map((key) => {
+        return {uid: key, categoryName: categoryList[key].categoryName };
+      });
+    }
     yield put({ type: SET_CATEGORIES, payload: arr});
     yield put({ type: CATEGORIES_LOADING, payload: false });
-  }catch(error) {
-    yield put({ type: CATEGORIES_LOADING, payload: false });
-    console.log(error);
-  }
+    }
+  // try {
+  //   let categories = yield call(fetchCategoriesApi, uid);
+  //   const arr = Object.keys(categories).map((key) => {
+  //     return {uid: key, categoryName: categories[key].categoryName };
+  //   });
+  //   yield put({ type: SET_CATEGORIES, payload: arr});
+  //   yield put({ type: CATEGORIES_LOADING, payload: false });
+  // }catch(error) {
+  //   yield put({ type: CATEGORIES_LOADING, payload: false });
+  //   console.log(error);
+  // }
 }
 
 
