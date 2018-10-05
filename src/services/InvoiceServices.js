@@ -9,8 +9,8 @@ export function createCategoryApi(categoryName, uid) {
   });
 }
 
-export function fetchCategoriesApi() {
-  const ref = firebase.database().ref('29ZPPTaIisUvMPZ8njGYqADKu0P2/categories')
+export function fetchCategoriesApi(uid) {
+  const ref = firebase.database().ref(`${uid}/categories`)
   const channel = eventChannel(emit => {
       ref.on('value', snapshot => {
         emit({ categories : snapshot.val()});
@@ -24,4 +24,13 @@ export function fetchCategoriesApi() {
   //     resolve(snapshot.val());
   //   })
   // });
+}
+
+export function deleteCategoryApi(uid, categoryId) {
+  return new Promise((resolve, reject) => {
+    firebase.database().ref(`${uid}/categories/${categoryId}`)
+    .remove()
+    .then(res => resolve(res))
+    .catch(error => reject(error));
+  }); 
 }

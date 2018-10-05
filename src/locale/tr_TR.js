@@ -21,7 +21,8 @@ export default {
     [keyValues.my_invoices]: 'Faturalarım',
     [keyValues.add_invoice_category_text]: 'Fatura Kategorisi Ekle',
     [keyValues.invoice_name]: 'Fatura İsmi',
-    [keyValues.add]: 'Ekle'
+    [keyValues.add]: 'Ekle',
+    [keyValues.delete]: 'Sil'
   },
   [keyValues.forms]: {
     [keyValues.username]: 'Kullanıcı Adı',

@@ -4,7 +4,8 @@ import {
   signinApi, 
   fetchCurrentUserInfo, 
   createCategoryApi,
-  fetchCategoriesApi
+  fetchCategoriesApi,
+  deleteCategoryApi
  } from '../services';
 
 import {
@@ -18,7 +19,9 @@ import {
   CREATE_CATEGORY_SUCCESS,
   FETCH_CATEGORIES,
   SET_CATEGORIES,
-  CATEGORIES_LOADING
+  CATEGORIES_LOADING,
+  DELETE_CATEGORY,
+  DELETE_CATEGORY_SUCCESS
 } from './types';
 
 import i18n from '../locale/i18n';
@@ -28,6 +31,7 @@ export function* rootSaga() {
   yield takeLatest(SIGN_IN_REQUEST, signin);
   yield takeLatest(FETCH_CURRENT_USER_INFO, setCurrentUserInfo);
   yield takeLatest(CREATE_CATEGORY, createCategory);
+  yield takeLatest(DELETE_CATEGORY, deleteCategory);
   yield takeEvery(FETCH_CATEGORIES, fetchCategories);
 }
 
@@ -72,6 +76,15 @@ function* createCategory({ categoryName, uid }) {
     yield put({ type: CREATE_CATEGORY_SUCCESS, payload: false });
   }
 }
+function* deleteCategory({ uid, categoryId }) {
+  try {
+    yield call(deleteCategoryApi, uid, categoryId);
+    yield put({ type: DELETE_CATEGORY_SUCCESS, payload: true });
+  }catch(error) {
+    console.log(error);
+    yield put({ type: DELETE_CATEGORY_SUCCESS, payload: false });
+  }
+}
 
 function* fetchCategories({ uid }) {
     const updateCategories = fetchCategoriesApi(uid);
@@ -83,7 +96,7 @@ function* fetchCategories({ uid }) {
       arr = [];
     }else {
       arr = Object.keys(categoryList).map((key) => {
-        return {uid: key, categoryName: categoryList[key].categoryName };
+        return {id: key, categoryName: categoryList[key].categoryName };
       });
     }
     yield put({ type: SET_CATEGORIES, payload: arr});

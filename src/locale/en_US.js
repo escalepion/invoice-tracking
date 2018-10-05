@@ -21,7 +21,8 @@ export default {
     [keyValues.my_invoices]: 'My Incoives',
     [keyValues.add_invoice_category_text]: 'Add Invoice Category',
     [keyValues.invoice_name]: 'Invoice Name',
-    [keyValues.add]: 'Add'
+    [keyValues.add]: 'Add',
+    [keyValues.delete]: 'Delete'
   },
   [keyValues.forms]: {
     [keyValues.username]: 'Username',

@@ -18,6 +18,7 @@ export default {
   add_category_title: 'add_category_title',
   invoice_name: 'invoice_name',
   add: 'add',
+  delete: 'delete',
 
   //forms
   forms: 'forms',

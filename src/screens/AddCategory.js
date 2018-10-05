@@ -25,7 +25,6 @@ class AddCategory extends Component {
     this.props.dispatch({ type: CREATE_CATEGORY, categoryName, uid });
   }
   render() {
-    console.log(this.props.invoices);
     const { handleSubmit } = this.props;
     return (
       <KeyboardAvoidingView

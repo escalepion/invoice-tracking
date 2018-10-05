@@ -28,4 +28,4 @@ export function fetchCurrentUserInfo(uid) {
     })
     .catch(err => reject(err));
   });
-};
+}

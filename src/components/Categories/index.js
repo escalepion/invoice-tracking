@@ -15,8 +15,9 @@ class Index extends Component {
           {
             this.props.categoryList.map((item) => (
               <ListItem
-                key={item.uid}
+                key={item.id}
                 title={item.categoryName}
+                onPress={() => this.props.navigation.navigate('CategoryDetail', { id: item.id })}
               />
             ))
           }
