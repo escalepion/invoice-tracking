@@ -18,12 +18,6 @@ export function fetchCategoriesApi(uid) {
       return () => ref.off();
     })	
   return channel; 
-  // return new Promise((resolve) => {
-  //   firebase.database().ref(`${uid}/categories`)
-  //   .on('value', function(snapshot) {
-  //     resolve(snapshot.val());
-  //   })
-  // });
 }
 
 export function deleteCategoryApi(uid, categoryId) {

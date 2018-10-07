@@ -17,6 +17,7 @@ import {
   SET_CURRENT_USER_INFO,
   CREATE_CATEGORY,
   CREATE_CATEGORY_SUCCESS,
+  CRETAE_CATEGORY_LOADING,
   FETCH_CATEGORIES,
   SET_CATEGORIES,
   CATEGORIES_LOADING,
@@ -68,12 +69,15 @@ function* setCurrentUserInfo({uid}) {
 }
 
 function* createCategory({ categoryName, uid }) {
+  yield put({ type: CRETAE_CATEGORY_LOADING, payload: true });
   try {
     yield call(createCategoryApi, categoryName, uid);
     yield put({ type: CREATE_CATEGORY_SUCCESS, payload: true });
+    yield put({ type: CRETAE_CATEGORY_LOADING, payload: false });
   }catch(error) {
     console.log(error);
     yield put({ type: CREATE_CATEGORY_SUCCESS, payload: false });
+    yield put({ type: CRETAE_CATEGORY_LOADING, payload: false });
   }
 }
 function* deleteCategory({ uid, categoryId }) {
@@ -102,17 +106,6 @@ function* fetchCategories({ uid }) {
     yield put({ type: SET_CATEGORIES, payload: arr});
     yield put({ type: CATEGORIES_LOADING, payload: false });
     }
-  // try {
-  //   let categories = yield call(fetchCategoriesApi, uid);
-  //   const arr = Object.keys(categories).map((key) => {
-  //     return {uid: key, categoryName: categories[key].categoryName };
-  //   });
-  //   yield put({ type: SET_CATEGORIES, payload: arr});
-  //   yield put({ type: CATEGORIES_LOADING, payload: false });
-  // }catch(error) {
-  //   yield put({ type: CATEGORIES_LOADING, payload: false });
-  //   console.log(error);
-  // }
 }
 
 

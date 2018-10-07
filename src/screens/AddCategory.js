@@ -25,7 +25,7 @@ class AddCategory extends Component {
     this.props.dispatch({ type: CREATE_CATEGORY, categoryName, uid });
   }
   render() {
-    const { handleSubmit } = this.props;
+    const { handleSubmit, invoices } = this.props;
     return (
       <KeyboardAvoidingView
         keyboardVerticalOffset={Header.HEIGHT + 60}
@@ -41,9 +41,10 @@ class AddCategory extends Component {
               component={renderField}
               validate={validateEmptyInput}
             />
-            <PrimaryButton 
+            <PrimaryButton
+            disabled = {invoices.createCategoryLoading}
             onPress={handleSubmit(this.onSubmit.bind(this))}
-            title={i18n.t(keyValues.add)}
+            title={invoices.createCategoryLoading ? i18n.t(keyValues.loading) :  i18n.t(keyValues.add)}
             />
           </MainCardContainer>
         </ScrollView>
