@@ -1,12 +1,25 @@
-import { createStackNavigator, createDrawerNavigator } from 'react-navigation';
+import React from 'react';
+import { createStackNavigator, createDrawerNavigator, createBottomTabNavigator } from 'react-navigation';
+import { Icon } from 'react-native-elements';
 
 import Index from '../screens/Index';
-
 import LogIn from '../screens/auth/LogIn';
 import Signup from '../screens/auth/Signup';
 import SignOut from '../screens/auth/SignOut';
 import AddCategory from '../screens/AddCategory';
-import CategoryDetail from '../screens/CategoryDetail';
+import CategoryList from '../screens/CategoryList';
+import CategorySettings from '../screens/CategorySettings';
+
+const renderCategoryTabIconNames = (routeName) => {
+  switch(routeName) {
+    case 'CategoryList':
+      return 'list';
+    case 'CategorySettings':
+      return 'settings';
+    default:
+      'list';
+  }
+}
 
 export const LoggedIn = createStackNavigator({
   Index: {
@@ -19,7 +32,28 @@ export const LoggedIn = createStackNavigator({
     screen: AddCategory
   },
   CategoryDetail: {
-    screen: CategoryDetail
+    screen: createBottomTabNavigator(
+      {
+        CategoryList,
+        CategorySettings,
+      },
+      {
+        navigationOptions: ({ navigation }) => ({
+          tabBarIcon: ({ tintColor }) => {
+            const { routeName } = navigation.state;
+            const iconName = renderCategoryTabIconNames(routeName);
+            return <Icon name={iconName} size={35} color={tintColor} />
+          },
+        }),
+        tabBarLabel: {
+        },
+        tabBarOptions: {
+          activeTintColor: 'tomato',
+          inactiveTintColor: 'gray',
+          showLabel: false,
+        },
+      }
+    )
   }
 });
 

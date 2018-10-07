@@ -8,7 +8,7 @@ import keyValues from '../locale/keyValues';
 import { PrimaryButton } from '../common/Buttons';
 import { DELETE_CATEGORY, DELETE_CATEGORY_SUCCESS } from '../sagas/types';
 
-class CategoryDetail extends Component {
+class CategorySettings extends Component {
   componentDidUpdate() {
     if(this.props.invoices.deleteCategorySuccess) {
       this.props.dispatch({ type: DELETE_CATEGORY_SUCCESS, payload: false });
@@ -39,4 +39,4 @@ const mapStateToProps = (state) => {
   return {invoices: state.invoices};
 };
 
-export default connect(mapStateToProps,null)(CategoryDetail);
+export default connect(mapStateToProps,null)(CategorySettings);
