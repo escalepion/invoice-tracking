@@ -22,7 +22,8 @@ export default {
     [keyValues.add_invoice_category_text]: 'Add Invoice Category',
     [keyValues.invoice_name]: 'Invoice Name',
     [keyValues.add]: 'Add',
-    [keyValues.delete]: 'Delete'
+    [keyValues.delete]: 'Delete',
+    [keyValues.invoices]: 'Invoices'
   },
   [keyValues.forms]: {
     [keyValues.username]: 'Username',

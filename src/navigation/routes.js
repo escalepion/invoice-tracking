@@ -2,23 +2,29 @@ import React from 'react';
 import { createStackNavigator, createDrawerNavigator, createBottomTabNavigator } from 'react-navigation';
 import { Icon } from 'react-native-elements';
 
+import i18n from '../locale/i18n';
+import keyValues from '../locale/keyValues';
+
 import Index from '../screens/Index';
 import LogIn from '../screens/auth/LogIn';
 import Signup from '../screens/auth/Signup';
 import SignOut from '../screens/auth/SignOut';
 import AddCategory from '../screens/AddCategory';
-import CategoryList from '../screens/CategoryList';
+import InvoiceList from '../screens/InvoiceList';
 import CategorySettings from '../screens/CategorySettings';
 
 const renderCategoryTabIconNames = (routeName) => {
   switch(routeName) {
-    case 'CategoryList':
+    case 'InvoiceList':
       return 'list';
     case 'CategorySettings':
       return 'settings';
     default:
       'list';
   }
+}
+const renderCategoryTabTitle = () => {
+  return i18n.t(keyValues.invoices);
 }
 
 export const LoggedIn = createStackNavigator({
@@ -34,7 +40,7 @@ export const LoggedIn = createStackNavigator({
   CategoryDetail: {
     screen: createBottomTabNavigator(
       {
-        CategoryList,
+        InvoiceList,
         CategorySettings,
       },
       {
@@ -45,15 +51,17 @@ export const LoggedIn = createStackNavigator({
             return <Icon name={iconName} size={35} color={tintColor} />
           },
         }),
-        tabBarLabel: {
-        },
         tabBarOptions: {
           activeTintColor: 'tomato',
           inactiveTintColor: 'gray',
           showLabel: false,
         },
       }
-    )
+    ),
+    navigationOptions: () => {
+      const title = renderCategoryTabTitle();
+      return { title }
+    }
   }
 });
 
