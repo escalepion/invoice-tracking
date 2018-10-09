@@ -10,12 +10,13 @@ import LogIn from '../screens/auth/LogIn';
 import Signup from '../screens/auth/Signup';
 import SignOut from '../screens/auth/SignOut';
 import AddCategory from '../screens/AddCategory';
-import InvoiceList from '../screens/InvoiceList';
+import AddInvoice from '../screens/AddInvoice';
+import Invoices from '../screens/Invoices';
 import CategorySettings from '../screens/CategorySettings';
 
 const renderCategoryTabIconNames = (routeName) => {
   switch(routeName) {
-    case 'InvoiceList':
+    case 'Invoices':
       return 'list';
     case 'CategorySettings':
       return 'settings';
@@ -37,10 +38,13 @@ export const LoggedIn = createStackNavigator({
   AddCategory: {
     screen: AddCategory
   },
+  AddInvoice: {
+    screen: AddInvoice
+  },
   CategoryDetail: {
     screen: createBottomTabNavigator(
       {
-        InvoiceList,
+        Invoices,
         CategorySettings,
       },
       {

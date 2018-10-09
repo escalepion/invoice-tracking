@@ -4,9 +4,9 @@ import { Button } from 'react-native-elements';
 import {connect} from 'react-redux';
 import firebase from 'firebase';
 
+import { FETCH_CATEGORIES } from '../sagas/types';
 import i18n from '../locale/i18n';
 import keyValues from '../locale/keyValues';
-import { FETCH_CATEGORIES } from '../sagas/types';
 
 import MainCardContainer from '../common/MainCardContainer';
 import MainDefaultMessage from '../common/MainDefaultMessage';

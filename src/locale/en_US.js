@@ -20,7 +20,11 @@ export default {
     [keyValues.home_welcome_tex]: "Hey !!! You don't have any invoices added yet. You can start adding new one.",
     [keyValues.my_invoices]: 'My Incoives',
     [keyValues.add_invoice_category_text]: 'Add Invoice Category',
+    [keyValues.add_invoice_text]: 'Add Invoice',
+    [keyValues.add_invoice]: 'Add Invoice',
     [keyValues.invoice_name]: 'Invoice Name',
+    [keyValues.invoice_price]: 'Invoice Price',
+    [keyValues.invoice_category_name]: 'Invoice Category Name',
     [keyValues.add]: 'Add',
     [keyValues.delete]: 'Delete',
     [keyValues.invoices]: 'Invoices'

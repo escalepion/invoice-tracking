@@ -10,19 +10,20 @@ import keyValues from '../locale/keyValues';
 import MainCardContainer from '../common/MainCardContainer';
 import { renderField } from '../common/forms/formElements';
 import { PrimaryButton } from '../common/Buttons';
-import { validateEmptyInput } from '../common/forms/functions';
-import { CREATE_CATEGORY, CREATE_CATEGORY_SUCCESS } from '../sagas/types';
+import { validateEmptyInput, normalizeNumber } from '../common/forms/functions';
+import { CREATE_INVOICE, CREATE_INVOICE_SUCCESS } from '../sagas/types';
 
-class AddCategory extends Component {
+class AddInvoice extends Component {
   componentDidUpdate() {
-    if(this.props.invoices.createCategorySuccess) {
-      this.props.dispatch({ type: CREATE_CATEGORY_SUCCESS, payload: false });
+    if(this.props.invoices.createInvoiceSuccess) {
+      this.props.dispatch({ type: CREATE_INVOICE_SUCCESS, payload: false });
       this.props.navigation.navigate('Index');
     }
   }
-  onSubmit({ categoryName }) {
+  onSubmit({ invoicePrice }) {
     const uid = firebase.auth().currentUser.uid;
-    this.props.dispatch({ type: CREATE_CATEGORY, categoryName, uid });
+    const categoryId = this.props.navigation.getParam('categoryId', 'noid');
+    this.props.dispatch({ type: CREATE_INVOICE, invoicePrice, uid, categoryId });
   }
   render() {
     const { handleSubmit, invoices } = this.props;
@@ -33,13 +34,15 @@ class AddCategory extends Component {
         behavior="padding"
       >
         <ScrollView keyboardShouldPersistTaps='handled'>
-          <MainCardContainer title={i18n.t(keyValues.add_invoice_category_text)}>
+          <MainCardContainer title={i18n.t(keyValues.add_invoice_text)}>
             <Field
-              name='categoryName'
-              label={i18n.t(keyValues.invoice_category_name)}
-              placeholder={i18n.t(keyValues.invoice_category_name)}
+              name='invoicePrice'
+              label={i18n.t(keyValues.invoice_price)}
+              placeholder={i18n.t(keyValues.invoice_price)}
+              keyboardType='numeric'
               component={renderField}
               validate={validateEmptyInput}
+              normalize={normalizeNumber}
             />
             <PrimaryButton
             disabled = {invoices.createCategoryLoading}
@@ -65,8 +68,8 @@ const mapStateToProps = (state) => {
   return {invoices: state.invoices};
 };
 
-const AddCategoryForm = reduxForm({
-  form: 'addCategory'
-})(AddCategory);
+const AddInvoiceForm = reduxForm({
+  form: 'addInvoice'
+})(AddInvoice);
 
-export default connect(mapStateToProps, null)(AddCategoryForm);
+export default connect(mapStateToProps, null)(AddInvoiceForm);

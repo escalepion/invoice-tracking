@@ -11,3 +11,18 @@ export const validateMail = (value) => {
       return !re.test(value) ? i18n.t(`${tKeyValues.errors}:${tKeyValues.email_form_type_error}`) : undefined; 
   }
 }
+
+//normalizations
+export const normalizeNumber = value => value && changeToNumber(value);
+
+const changeToNumber = (text) => {
+  let newText = '';
+  let numbers = '0123456789.';
+
+  for (var i = 0; i < text.length; i++) {
+      if ( numbers.indexOf(text[i]) > -1 ) {
+          newText = newText + text[i];
+      }
+  }   
+  return newText;
+}
