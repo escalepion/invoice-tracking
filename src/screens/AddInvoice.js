@@ -17,7 +17,8 @@ class AddInvoice extends Component {
   componentDidUpdate() {
     if(this.props.invoices.createInvoiceSuccess) {
       this.props.dispatch({ type: CREATE_INVOICE_SUCCESS, payload: false });
-      this.props.navigation.navigate('Index');
+      const id = this.props.navigation.getParam('categoryId', 'noid');
+      this.props.navigation.navigate('CategoryDetail', { id });
     }
   }
   onSubmit({ invoicePrice }) {
@@ -45,9 +46,9 @@ class AddInvoice extends Component {
               normalize={normalizeNumber}
             />
             <PrimaryButton
-            disabled = {invoices.createCategoryLoading}
+            disabled = {invoices.createInvoiceLoading}
             onPress={handleSubmit(this.onSubmit.bind(this))}
-            title={invoices.createCategoryLoading ? i18n.t(keyValues.loading) :  i18n.t(keyValues.add)}
+            title={invoices.createInvoiceLoading ? i18n.t(keyValues.loading) :  i18n.t(keyValues.add)}
             />
           </MainCardContainer>
         </ScrollView>

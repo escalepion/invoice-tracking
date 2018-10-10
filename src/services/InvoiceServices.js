@@ -9,6 +9,14 @@ export function createCategoryApi(categoryName, uid) {
   });
 }
 
+export function createInvoiceApi(invoicePrice, uid, categoryId) {
+  return new Promise((resolve, reject) => {
+    firebase.database().ref(`${uid}/invoices/${categoryId}`).push({ invoicePrice })
+    .then((res) => resolve(res))
+    .catch((error) => reject(error));
+  });
+}
+
 export function fetchCategoriesApi(uid) {
   const ref = firebase.database().ref(`${uid}/categories`)
   const channel = eventChannel(emit => {

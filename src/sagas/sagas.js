@@ -4,6 +4,7 @@ import {
   signinApi, 
   fetchCurrentUserInfo, 
   createCategoryApi,
+  createInvoiceApi,
   fetchCategoriesApi,
   deleteCategoryApi
  } from '../services';
@@ -16,8 +17,11 @@ import {
   FETCH_CURRENT_USER_INFO,
   SET_CURRENT_USER_INFO,
   CREATE_CATEGORY,
+  CREATE_INVOICE,
   CREATE_CATEGORY_SUCCESS,
+  CREATE_INVOICE_SUCCESS,
   CRETAE_CATEGORY_LOADING,
+  CRETAE_INVOICE_LOADING,
   FETCH_CATEGORIES,
   SET_CATEGORIES,
   CATEGORIES_LOADING,
@@ -32,6 +36,7 @@ export function* rootSaga() {
   yield takeLatest(SIGN_IN_REQUEST, signin);
   yield takeLatest(FETCH_CURRENT_USER_INFO, setCurrentUserInfo);
   yield takeLatest(CREATE_CATEGORY, createCategory);
+  yield takeLatest(CREATE_INVOICE, createInvoice);
   yield takeLatest(DELETE_CATEGORY, deleteCategory);
   yield takeEvery(FETCH_CATEGORIES, fetchCategories);
 }
@@ -80,6 +85,20 @@ function* createCategory({ categoryName, uid }) {
     yield put({ type: CRETAE_CATEGORY_LOADING, payload: false });
   }
 }
+
+function* createInvoice({ invoicePrice, uid, categoryId }) {
+  yield put({ type: CRETAE_INVOICE_LOADING, payload: true });
+  try {
+    yield call(createInvoiceApi, invoicePrice, uid, categoryId);
+    yield put({ type: CREATE_INVOICE_SUCCESS, payload: true });
+    yield put({ type: CRETAE_INVOICE_LOADING, payload: false });
+  }catch(error) {
+    console.log(error);
+    yield put({ type: CREATE_INVOICE_SUCCESS, payload: false });
+    yield put({ type: CRETAE_INVOICE_LOADING, payload: false });
+  }
+}
+
 function* deleteCategory({ uid, categoryId }) {
   try {
     yield call(deleteCategoryApi, uid, categoryId);

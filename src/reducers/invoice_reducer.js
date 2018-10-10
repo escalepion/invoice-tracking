@@ -1,14 +1,18 @@
 import {
   CREATE_CATEGORY_SUCCESS,
+  CREATE_INVOICE_SUCCESS,
   SET_CATEGORIES,
   CATEGORIES_LOADING,
   DELETE_CATEGORY_SUCCESS,
-  CRETAE_CATEGORY_LOADING
+  CRETAE_CATEGORY_LOADING,
+  CRETAE_INVOICE_LOADING
 } from '../sagas/types';
 
 const INITIAL_STATE = {
   createCategorySuccess: false,
   createCategoryLoading: false,
+  createInvoiceSuccess: false,
+  createInvoiceLoading: false,
   deleteCategorySuccess: false,
   categoryList: [],
   categoriesLoading: true
@@ -18,8 +22,12 @@ export default function (state = INITIAL_STATE, action) {
   switch (action.type) {
       case CREATE_CATEGORY_SUCCESS:
         return { ...state, createCategorySuccess: action.payload };
+      case CREATE_INVOICE_SUCCESS:
+        return { ...state, createInvoiceSuccess: action.payload };
       case CRETAE_CATEGORY_LOADING: 
         return { ...state, createCategoryLoading: action.payload };
+      case CRETAE_INVOICE_LOADING: 
+        return { ...state, createInvoiceLoading: action.payload };
       case DELETE_CATEGORY_SUCCESS:
         return { ...state, deleteCategorySuccess: action.payload };
       case SET_CATEGORIES:
