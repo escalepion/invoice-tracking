@@ -7,7 +7,8 @@ import {
   createInvoiceApi,
   fetchCategoriesApi,
   deleteCategoryApi,
-  createInvoiceFormFieldApi
+  createInvoiceFormFieldApi,
+  fetchInvoiceFormTemplateApi
  } from '../services';
 
 import {
@@ -28,7 +29,9 @@ import {
   CATEGORIES_LOADING,
   DELETE_CATEGORY,
   DELETE_CATEGORY_SUCCESS,
-  CREATE_INVOICE_FORM_FIELD
+  CREATE_INVOICE_FORM_FIELD,
+  FETCH_FORM_TEMPLATE,
+  SET_FIELD_TEMPLATE
 } from './types';
 
 import i18n from '../locale/i18n';
@@ -42,6 +45,7 @@ export function* rootSaga() {
   yield takeLatest(DELETE_CATEGORY, deleteCategory);
   yield takeLatest(CREATE_INVOICE_FORM_FIELD, createInvoiceFormField);
   yield takeEvery(FETCH_CATEGORIES, fetchCategories);
+  yield takeEvery(FETCH_FORM_TEMPLATE, fetchInvoiceFormTeplate);
 }
 
 function* signup({email, password, username, language}) {
@@ -123,7 +127,7 @@ function* deleteCategory({ uid, categoryId }) {
 
 function* fetchCategories({ uid }) {
     const updateCategories = fetchCategoriesApi(uid);
-    while(true) {
+    try{
     let categories = yield take(updateCategories);
     const categoryList = categories.categories;
     let arr;
@@ -136,7 +140,28 @@ function* fetchCategories({ uid }) {
     }
     yield put({ type: SET_CATEGORIES, payload: arr});
     yield put({ type: CATEGORIES_LOADING, payload: false });
+    }finally {
+      updateCategories.close();
     }
+}
+
+function* fetchInvoiceFormTeplate({ uid, categoryId }) {
+  const fetchTemplates = fetchInvoiceFormTemplateApi(uid, categoryId);
+  try {
+    let formFields = yield take(fetchTemplates);
+    const fieldList = formFields.formTemplate;
+    let arr;
+    if(fieldList === null) {
+      arr = [];
+    }else {
+      arr = Object.keys(fieldList).map((key) => {
+        return {id: key, fieldName: fieldList[key].fieldName, fieldType: fieldList[key].fieldType, required: fieldList[key].required };
+      });
+    }
+    yield put({ type: SET_FIELD_TEMPLATE, payload: arr});
+  }finally{
+    fetchTemplates.close();
+  }
 }
 
 

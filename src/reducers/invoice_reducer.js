@@ -5,7 +5,8 @@ import {
   CATEGORIES_LOADING,
   DELETE_CATEGORY_SUCCESS,
   CRETAE_CATEGORY_LOADING,
-  CRETAE_INVOICE_LOADING
+  CRETAE_INVOICE_LOADING,
+  SET_FIELD_TEMPLATE
 } from '../sagas/types';
 
 const INITIAL_STATE = {
@@ -15,6 +16,7 @@ const INITIAL_STATE = {
   createInvoiceLoading: false,
   deleteCategorySuccess: false,
   categoryList: [],
+  fieldTempate: [],
   categoriesLoading: true
 };
 
@@ -32,6 +34,9 @@ export default function (state = INITIAL_STATE, action) {
         return { ...state, deleteCategorySuccess: action.payload };
       case SET_CATEGORIES:
         return { ...state, categoryList: action.payload };
+      case SET_FIELD_TEMPLATE: 
+        console.log('field template : ',action.payload);
+        return { ...state, fieldTemplate: action.payload };
       case CATEGORIES_LOADING:
         return { ...state, categoriesLoading: action.payload };
       default:
