@@ -6,7 +6,8 @@ import {
   createCategoryApi,
   createInvoiceApi,
   fetchCategoriesApi,
-  deleteCategoryApi
+  deleteCategoryApi,
+  createInvoiceFormFieldApi
  } from '../services';
 
 import {
@@ -26,7 +27,8 @@ import {
   SET_CATEGORIES,
   CATEGORIES_LOADING,
   DELETE_CATEGORY,
-  DELETE_CATEGORY_SUCCESS
+  DELETE_CATEGORY_SUCCESS,
+  CREATE_INVOICE_FORM_FIELD
 } from './types';
 
 import i18n from '../locale/i18n';
@@ -38,6 +40,7 @@ export function* rootSaga() {
   yield takeLatest(CREATE_CATEGORY, createCategory);
   yield takeLatest(CREATE_INVOICE, createInvoice);
   yield takeLatest(DELETE_CATEGORY, deleteCategory);
+  yield takeLatest(CREATE_INVOICE_FORM_FIELD, createInvoiceFormField);
   yield takeEvery(FETCH_CATEGORIES, fetchCategories);
 }
 
@@ -83,6 +86,15 @@ function* createCategory({ categoryName, uid }) {
     console.log(error);
     yield put({ type: CREATE_CATEGORY_SUCCESS, payload: false });
     yield put({ type: CRETAE_CATEGORY_LOADING, payload: false });
+  }
+}
+
+function* createInvoiceFormField({ fieldType, fieldName, required, uid, categoryId }) {
+  try {
+    const createFormField = yield call(createInvoiceFormFieldApi, fieldType, fieldName, required, uid, categoryId);
+    console.log('key : ', createFormField.key);
+  }catch(error) {
+    console.log(error);
   }
 }
 

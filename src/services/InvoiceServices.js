@@ -36,3 +36,11 @@ export function deleteCategoryApi(uid, categoryId) {
     .catch(error => reject(error));
   }); 
 }
+
+export function createInvoiceFormFieldApi(fieldType, fieldName, required, uid, categoryId) {
+  return new Promise((resolve, reject) => {
+    firebase.database().ref(`${uid}/categories/${categoryId}/formTemplate`).push({ fieldType, fieldName, required })
+    .then((res) => resolve(res))
+    .catch((error) => reject(error));
+  });
+}

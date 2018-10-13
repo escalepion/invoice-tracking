@@ -24,6 +24,7 @@ export default {
   invoices: 'invoices',
   add: 'add',
   delete: 'delete',
+  add_field: 'add_field',
 
   //forms
   forms: 'forms',
