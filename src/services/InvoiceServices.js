@@ -23,7 +23,7 @@ export function fetchCategoriesApi(uid) {
       ref.on('value', snapshot => {
         emit({ categories : snapshot.val()});
       });
-      return () => ref.off();
+      return () => {};
     })	
   return channel; 
 }
@@ -34,7 +34,7 @@ export function fetchInvoiceFormTemplateApi(uid, categoryId) {
     ref.on('value', snapshot => {
       emit({ formTemplate : snapshot.val() });
     });
-    return () => ref.off();
+    return () => {};
   });
   return channel;
 }
@@ -52,6 +52,15 @@ export function createInvoiceFormFieldApi(fieldType, fieldName, required, uid, c
   return new Promise((resolve, reject) => {
     firebase.database().ref(`${uid}/categories/${categoryId}/formTemplate`).push({ fieldType, fieldName, required })
     .then((res) => resolve(res))
+    .catch((error) => reject(error));
+  });
+}
+
+export function deleteInvoiceFormFieldApi(uid, categoryId, fieldId) {
+  return new Promise((resolve, reject) => {
+    firebase.database().ref(`${uid}/categories/${categoryId}/formTemplate/${fieldId}`)
+    .remove()
+    .then((res) => resolve(res) )
     .catch((error) => reject(error));
   });
 }

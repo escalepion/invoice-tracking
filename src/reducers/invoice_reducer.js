@@ -16,7 +16,7 @@ const INITIAL_STATE = {
   createInvoiceLoading: false,
   deleteCategorySuccess: false,
   categoryList: [],
-  fieldTempate: [],
+  fieldTemplate: [],
   categoriesLoading: true
 };
 
@@ -35,7 +35,6 @@ export default function (state = INITIAL_STATE, action) {
       case SET_CATEGORIES:
         return { ...state, categoryList: action.payload };
       case SET_FIELD_TEMPLATE: 
-        console.log('field template : ',action.payload);
         return { ...state, fieldTemplate: action.payload };
       case CATEGORIES_LOADING:
         return { ...state, categoriesLoading: action.payload };
