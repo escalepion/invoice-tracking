@@ -8,6 +8,7 @@ import { FETCH_INVOICES } from '../sagas/types';
 import i18n from '../locale/i18n';
 import keyValues from '../locale/keyValues';
 import MainCardContainer from '../common/MainCardContainer';
+import InvoiceList from '../components/Invoices';
 
 class Invoices extends Component {
   componentDidMount() {
@@ -15,18 +16,29 @@ class Invoices extends Component {
     const categoryId = this.props.navigation.getParam('id');
     this.props.dispatch({ type: FETCH_INVOICES, uid, categoryId });
   }
-  render() {
-    console.log(this.props.invoices.invoiceList);
+  renderScreen() {
     const categoryId = this.props.navigation.getParam('id', 'noid');
+    const invoiceList = this.props.invoices.invoiceList;
+    console.log(invoiceList.length);
+    if (invoiceList.length === 0) {
+      return (
+      <View>
+        <Text>Henüz bir fatura eklemediniz. Bir tane ekleyerek başlayabilirsiniz.</Text>
+        <Button
+          buttonStyle={styles.addButtonText}
+          onPress={() => this.props.navigation.navigate('AddInvoice', { categoryId })}
+          title={i18n.t(keyValues.add_invoice)}
+        />
+      </View>
+      );
+    }
+    return <InvoiceList invoiceList={invoiceList} categoryId={categoryId} />
+  }
+  render() {
     return (
       <View style={styles.container}>
         <MainCardContainer title={i18n.t(keyValues.my_invoices)}>
-          <View><Text>Henüz bir fatura eklemediniz. Bir tane ekleyerek başlayabilirsiniz.</Text></View>
-          <Button
-            buttonStyle={styles.addButtonText}
-            onPress={() => this.props.navigation.navigate('AddInvoice', { categoryId })}
-            title={i18n.t(keyValues.add_invoice)}
-          />
+          {this.renderScreen()}
         </MainCardContainer>
       </View>
     );
@@ -46,7 +58,7 @@ const styles = StyleSheet.create({
 });
 
 const mapStateToProps = (state) => {
-  return {invoices : state.invoices};
+  return { invoices: state.invoices };
 };
 
 export default connect(mapStateToProps, null)(Invoices);
