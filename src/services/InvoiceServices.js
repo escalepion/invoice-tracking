@@ -28,17 +28,6 @@ export function fetchCategoriesApi(uid) {
   return channel; 
 }
 
-export function fetchInvoiceFormTemplateApi(uid, categoryId) {
-  const ref = firebase.database().ref(`${uid}/categories/${categoryId}/formTemplate`);
-  const channel = eventChannel(emit => {
-    ref.on('value', snapshot => {
-      emit({ formTemplate : snapshot.val() });
-    });
-    return () => {};
-  });
-  return channel;
-}
-
 export function deleteCategoryApi(uid, categoryId) {
   return new Promise((resolve, reject) => {
     firebase.database().ref(`${uid}/categories/${categoryId}`)

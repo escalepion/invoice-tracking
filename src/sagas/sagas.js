@@ -31,7 +31,6 @@ import {
   DELETE_CATEGORY,
   DELETE_CATEGORY_SUCCESS,
   CREATE_INVOICE_FORM_FIELD,
-  FETCH_FORM_TEMPLATE,
   SET_FIELD_TEMPLATE,
   DELETE_FIELD
 } from './types';
@@ -48,7 +47,6 @@ export function* rootSaga() {
   yield takeLatest(CREATE_INVOICE_FORM_FIELD, createInvoiceFormField);
   yield takeLatest(DELETE_FIELD, deleteInvoiceFormField);
   yield takeEvery(FETCH_CATEGORIES, fetchCategories);
-  yield takeEvery(FETCH_FORM_TEMPLATE, fetchInvoiceFormTeplate);
 }
 
 function* signup({email, password, username, language}) {
@@ -154,22 +152,5 @@ function* fetchCategories({ uid }) {
     }
 }
 
-function* fetchInvoiceFormTeplate({ uid, categoryId }) {
-  const fetchTemplates = fetchInvoiceFormTemplateApi(uid, categoryId);
-  while(true) {
-    let formFields = yield take(fetchTemplates);
-    const fieldList = formFields.formTemplate;
-    let arr;
-    if(fieldList === null) {
-      arr = [];
-    }else {
-      arr = Object.keys(fieldList).map((key) => {
-        console.log('arr');
-        return {id: key, fieldName: fieldList[key].fieldName, fieldType: fieldList[key].fieldType, required: fieldList[key].required };
-      });
-    }
-    yield put({ type: SET_FIELD_TEMPLATE, payload: arr});
-  }
-}
 
 

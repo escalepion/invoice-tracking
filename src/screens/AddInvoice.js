@@ -15,16 +15,10 @@ import {
   CREATE_INVOICE,
   CREATE_INVOICE_SUCCESS,
   CREATE_INVOICE_FORM_FIELD,
-  FETCH_FORM_TEMPLATE,
   DELETE_FIELD
 } from '../sagas/types';
 
 class AddInvoice extends Component {
-  // componentDidMount() {
-  //   const uid = firebase.auth().currentUser.uid;
-  //   const categoryId = this.props.navigation.getParam('categoryId', 'noid');
-  //   this.props.dispatch({ type: FETCH_FORM_TEMPLATE, uid, categoryId });
-  // }
   componentDidUpdate() {
     if (this.props.invoices.createInvoiceSuccess) {
       const id = this.props.navigation.getParam('categoryId', 'noid');
