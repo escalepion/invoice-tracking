@@ -19,7 +19,6 @@ class Invoices extends Component {
   renderScreen() {
     const categoryId = this.props.navigation.getParam('id', 'noid');
     const invoiceList = this.props.invoices.invoiceList;
-    console.log(invoiceList.length);
     if (invoiceList.length === 0) {
       return (
       <View>
