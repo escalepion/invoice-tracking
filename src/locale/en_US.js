@@ -28,7 +28,8 @@ export default {
     [keyValues.add]: 'Add',
     [keyValues.delete]: 'Delete',
     [keyValues.invoices]: 'Invoices',
-    [keyValues.add_field]: 'Add Field'
+    [keyValues.add_field]: 'Add Field',
+    [keyValues.delete_field]: 'Delete Field',
   },
   [keyValues.forms]: {
     [keyValues.username]: 'Username',

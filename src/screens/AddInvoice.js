@@ -32,7 +32,7 @@ class AddInvoice extends Component {
     this.props.dispatch({ type: DELETE_FIELD, uid, categoryId, fieldId });
   }
   renderTemplateFields() {
-    const currentCategory = this.props.invoices.categoryList.find(item => item.id = this.props.navigation.getParam('categoryId'));
+    const currentCategory = this.props.invoices.categoryList.find(item => item.id === this.props.navigation.getParam('categoryId'));
     if (currentCategory.formTemplate) {
       const fieldList = currentCategory.formTemplate
       const fieldArray = Object.keys(fieldList).map((key) => {
@@ -51,7 +51,7 @@ class AddInvoice extends Component {
               />
               <PrimaryButton
                 onPress={() => this.onDeleteField(field.id)}
-                title={i18n.t(keyValues.add_field)}
+                title={i18n.t(keyValues.delete_field)}
               />
             </View>
           );
@@ -67,10 +67,11 @@ class AddInvoice extends Component {
     const fieldName = 'Fieldd';
     this.props.dispatch({ type: CREATE_INVOICE_FORM_FIELD, fieldType, fieldName, required, uid, categoryId });
   }
-  onSubmit({ invoicePrice }) {
+  onSubmit(values) {
+    console.log(values);
     const uid = firebase.auth().currentUser.uid;
     const categoryId = this.props.navigation.getParam('categoryId', 'noid');
-    this.props.dispatch({ type: CREATE_INVOICE, invoicePrice, uid, categoryId });
+    this.props.dispatch({ type: CREATE_INVOICE, values, uid, categoryId });
   }
   render() {
     const { handleSubmit, invoices } = this.props;

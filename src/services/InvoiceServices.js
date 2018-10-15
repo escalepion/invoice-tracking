@@ -9,9 +9,9 @@ export function createCategoryApi(categoryName, uid) {
   });
 }
 
-export function createInvoiceApi(invoicePrice, uid, categoryId) {
+export function createInvoiceApi(values, uid, categoryId) {
   return new Promise((resolve, reject) => {
-    firebase.database().ref(`${uid}/invoices/${categoryId}`).push({ invoicePrice })
+    firebase.database().ref(`${uid}/invoices/${categoryId}`).push({ ...values })
     .then((res) => resolve(res))
     .catch((error) => reject(error));
   });
@@ -24,8 +24,20 @@ export function fetchCategoriesApi(uid) {
         emit({ categories : snapshot.val()});
       });
       return () => {};
-    })	
+    });	
   return channel; 
+}
+
+export function fetchInvoicesApi(uid, categoryId) {
+  const ref = firebase.database().ref(`${uid}/invoices/${categoryId}`);
+  const channel = eventChannel(emit => {
+    ref.on('value', snapshot => {
+      emit({ invoices : snapshot.val() });
+    });
+
+    return () => {};
+  });
+  return channel;
 }
 
 export function deleteCategoryApi(uid, categoryId) {

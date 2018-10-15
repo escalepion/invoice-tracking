@@ -28,7 +28,8 @@ export default {
     [keyValues.add]: 'Ekle',
     [keyValues.delete]: 'Sil',
     [keyValues.invoices]: 'Faturalar',
-    [keyValues.add_field]: 'Alan Ekle'
+    [keyValues.add_field]: 'Alan Ekle',
+    [keyValues.delete_field]: 'Alan Sil',
   },
   [keyValues.forms]: {
     [keyValues.username]: 'Kullanıcı Adı',

@@ -8,8 +8,8 @@ import {
   fetchCategoriesApi,
   deleteCategoryApi,
   createInvoiceFormFieldApi,
-  fetchInvoiceFormTemplateApi,
-  deleteInvoiceFormFieldApi
+  deleteInvoiceFormFieldApi,
+  fetchInvoicesApi
  } from '../services';
 
 import {
@@ -31,8 +31,9 @@ import {
   DELETE_CATEGORY,
   DELETE_CATEGORY_SUCCESS,
   CREATE_INVOICE_FORM_FIELD,
-  SET_FIELD_TEMPLATE,
-  DELETE_FIELD
+  DELETE_FIELD,
+  FETCH_INVOICES,
+  SET_INVOICES
 } from './types';
 
 import i18n from '../locale/i18n';
@@ -47,6 +48,7 @@ export function* rootSaga() {
   yield takeLatest(CREATE_INVOICE_FORM_FIELD, createInvoiceFormField);
   yield takeLatest(DELETE_FIELD, deleteInvoiceFormField);
   yield takeEvery(FETCH_CATEGORIES, fetchCategories);
+  yield takeEvery(FETCH_INVOICES, fetchInvoices);
 }
 
 function* signup({email, password, username, language}) {
@@ -103,10 +105,10 @@ function* createInvoiceFormField({ fieldType, fieldName, required, uid, category
   }
 }
 
-function* createInvoice({ invoicePrice, uid, categoryId }) {
+function* createInvoice({ values, uid, categoryId }) {
   yield put({ type: CRETAE_INVOICE_LOADING, payload: true });
   try {
-    yield call(createInvoiceApi, invoicePrice, uid, categoryId);
+    yield call(createInvoiceApi, values, uid, categoryId);
     yield put({ type: CREATE_INVOICE_SUCCESS, payload: true });
     yield put({ type: CRETAE_INVOICE_LOADING, payload: false });
   }catch(error) {
@@ -150,6 +152,23 @@ function* fetchCategories({ uid }) {
     yield put({ type: SET_CATEGORIES, payload: arr});
     yield put({ type: CATEGORIES_LOADING, payload: false });
     }
+}
+
+function* fetchInvoices({ uid, categoryId }) {
+  const fetchInvoices = fetchInvoicesApi(uid, categoryId)
+  while(true) {
+  let invoices = yield take(fetchInvoices);
+  const invoiceList = invoices.invoices;
+  let arr;
+  if (invoiceList === null) {
+    arr = [];
+  }else {
+    arr = Object.keys(invoiceList).map((key) => {
+      return {id: key, fields: invoiceList[key]};
+    });
+  }
+  yield put({ type: SET_INVOICES, payload: arr});
+  }
 }
 
 
