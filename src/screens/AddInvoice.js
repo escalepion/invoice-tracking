@@ -24,7 +24,7 @@ class AddInvoice extends Component {
   render() {
     const categoryId = this.props.navigation.getParam('categoryId', 'noid');
     return (
-      <AddInvoiceForm categoryId={categoryId} onSubmit={this.onSubmit.bind(this)}/>
+      <AddInvoiceForm categoryId={categoryId} onSubmit={this.onSubmit.bind(this)} type='add'/>
     );
   }
 }

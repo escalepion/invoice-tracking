@@ -5,6 +5,7 @@ import {
   fetchCurrentUserInfo, 
   createCategoryApi,
   createInvoiceApi,
+  updateInvoiceApi,
   fetchCategoriesApi,
   deleteCategoryApi,
   createInvoiceFormFieldApi,
@@ -20,9 +21,12 @@ import {
   FETCH_CURRENT_USER_INFO,
   SET_CURRENT_USER_INFO,
   CREATE_CATEGORY,
-  CREATE_INVOICE,
   CREATE_CATEGORY_SUCCESS,
+  CREATE_INVOICE,
   CREATE_INVOICE_SUCCESS,
+  UPDATE_INVOICE,
+  UPDATE_INVOICE_SUCCESS,
+  UPDATE_INVOICE_LOADING,
   CRETAE_CATEGORY_LOADING,
   CRETAE_INVOICE_LOADING,
   FETCH_CATEGORIES,
@@ -44,6 +48,7 @@ export function* rootSaga() {
   yield takeLatest(FETCH_CURRENT_USER_INFO, setCurrentUserInfo);
   yield takeLatest(CREATE_CATEGORY, createCategory);
   yield takeLatest(CREATE_INVOICE, createInvoice);
+  yield takeLatest(UPDATE_INVOICE, updateInvoice);
   yield takeLatest(DELETE_CATEGORY, deleteCategory);
   yield takeLatest(CREATE_INVOICE_FORM_FIELD, createInvoiceFormField);
   yield takeLatest(DELETE_FIELD, deleteInvoiceFormField);
@@ -115,6 +120,18 @@ function* createInvoice({ values, uid, categoryId }) {
     console.log(error);
     yield put({ type: CREATE_INVOICE_SUCCESS, payload: false });
     yield put({ type: CRETAE_INVOICE_LOADING, payload: false });
+  }
+}
+
+function* updateInvoice({ values, uid, categoryId, invoiceId }) {
+  yield put({ type : UPDATE_INVOICE_SUCCESS, payload: true });
+  try {
+    yield call(updateInvoiceApi, values, uid, categoryId, invoiceId);
+    yield put({ type : UPDATE_INVOICE_SUCCESS, payload: true });
+    yield put({ type : UPDATE_INVOICE_LOADING, payload: false });
+  }catch(error) {
+    yield put({ type : UPDATE_INVOICE_SUCCESS, payload: false });
+    yield put({ type : UPDATE_INVOICE_LOADING, payload: false });
   }
 }
 

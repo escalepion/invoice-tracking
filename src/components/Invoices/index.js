@@ -18,7 +18,7 @@ class Index extends Component {
               <ListItem
                 key={item.id}
                 title={item.fields.invoicePrice}
-                onPress={() => console.log('navigate')}
+                onPress={() => this.props.navigation.navigate('UpdateInvoice', { categoryId, invoiceDetails : item })}
               />
             ))
           }

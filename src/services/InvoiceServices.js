@@ -17,6 +17,15 @@ export function createInvoiceApi(values, uid, categoryId) {
   });
 }
 
+export function updateInvoiceApi(values, uid, categoryId, invoiceId) {
+  return new Promise((resolve, reject) => {
+    firebase.database().ref(`${uid}/invoices/${categoryId}/${invoiceId}`)
+    .update({ ...values })
+    .then((res) => resolve(res))
+    .catch((error) => reject(error));
+  });
+}
+
 export function fetchCategoriesApi(uid) {
   const ref = firebase.database().ref(`${uid}/categories`)
   const channel = eventChannel(emit => {

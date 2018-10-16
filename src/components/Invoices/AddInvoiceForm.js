@@ -25,7 +25,7 @@ class AddInvoice extends Component {
   renderTemplateFields() {
     const currentCategory = this.props.invoices.categoryList.find(item => item.id === this.props.categoryId);
     if (currentCategory.formTemplate) {
-      const fieldList = currentCategory.formTemplate
+      const fieldList = currentCategory.formTemplate;
       const fieldArray = Object.keys(fieldList).map((key) => {
         return { id: key, fieldName: fieldList[key].fieldName, fieldType: fieldList[key].fieldType, required: fieldList[key].required };
       });
@@ -61,6 +61,16 @@ class AddInvoice extends Component {
   onSubmit(values) {
     this.props.onSubmit(values);
   }
+  renderButtonTitle() {
+    switch(this.props.type) {
+      case 'add':
+        return i18n.t(keyValues.add_invoice)
+      case 'update':
+        return i18n.t(keyValues.update_invoice)
+      default:
+        return i18n.t(keyValues.add_invoice)
+    }
+  }
   render() {
     const { handleSubmit, invoices } = this.props;
     return (
@@ -91,7 +101,7 @@ class AddInvoice extends Component {
               <PrimaryButton
                 disabled={invoices.createInvoiceLoading}
                 onPress={handleSubmit(this.props.onSubmit.bind(this))}
-                title={invoices.createInvoiceLoading ? i18n.t(keyValues.loading) : i18n.t(keyValues.add_invoice)}
+                title={invoices.createInvoiceLoading || invoices.updateInvoiceLoading ? i18n.t(keyValues.loading) : this.renderButtonTitle()}
               />
             </View>
           </MainCardContainer>
@@ -117,7 +127,8 @@ const mapStateToProps = (state) => {
 };
 
 const AddInvoiceForm = reduxForm({
-  form: 'addInvoice'
+  form: 'addInvoice',
+  enableReinitialize: true
 })(AddInvoice);
 
 export default connect(mapStateToProps, null)(AddInvoiceForm);

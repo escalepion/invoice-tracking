@@ -16,6 +16,7 @@ export default {
   my_invoices: 'my_invoices',
   add_invoice_category_text: 'add_invoice_category_text',
   add_invoice_text: 'add_invoice_text',
+  update_invoice: 'add_invoice_text',
   add_invoice: 'add_invoice',
   add_category_title: 'add_category_title',
   invoice_name: 'invoice_name',

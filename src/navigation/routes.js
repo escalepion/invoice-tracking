@@ -11,6 +11,7 @@ import Signup from '../screens/auth/Signup';
 import SignOut from '../screens/auth/SignOut';
 import AddCategory from '../screens/AddCategory';
 import AddInvoice from '../screens/AddInvoice';
+import UpdateInvoice from '../screens/UpdateInvoice';
 import Invoices from '../screens/Invoices';
 import CategorySettings from '../screens/CategorySettings';
 
@@ -37,6 +38,9 @@ export const LoggedIn = createStackNavigator({
   },
   AddCategory: {
     screen: AddCategory
+  },
+  UpdateInvoice: {
+    screen: UpdateInvoice
   },
   AddInvoice: {
     screen: AddInvoice
