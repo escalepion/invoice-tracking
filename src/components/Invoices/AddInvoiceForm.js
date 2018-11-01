@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { KeyboardAvoidingView, ScrollView, StyleSheet, View } from 'react-native';
+import { KeyboardAvoidingView, ScrollView, StyleSheet, View, Text } from 'react-native';
 import firebase from 'firebase';
 import { connect } from 'react-redux';
 import { reduxForm, Field } from 'redux-form';
@@ -10,6 +10,7 @@ import keyValues from '../../locale/keyValues';
 import MainCardContainer from '../../common/MainCardContainer';
 import { renderField } from '../../common/forms/formElements';
 import { PrimaryButton } from '../../common/Buttons';
+import OpenModal from '../../common/OpenModal';
 import { validateEmptyInput, normalizeNumber } from '../../common/forms/functions';
 import {
   CREATE_INVOICE_FORM_FIELD,
@@ -17,6 +18,12 @@ import {
 } from '../../sagas/types';
 
 class AddInvoice extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      addModalActive: false
+    }
+  }
   onDeleteField(fieldId) {
     const uid = firebase.auth().currentUser.uid;
     const categoryId = this.props.categoryId;
@@ -50,6 +57,15 @@ class AddInvoice extends Component {
       }
     }
   }
+  closeModal() {
+    this.setState({ addModalActive : false });
+  }
+  //when add button clicked. Just opens modal.
+  onAddButtonClick() {
+    this.setState({ addModalActive : true });
+  }
+  
+  //when add modal confirmed
   onAdd() {
     const uid = firebase.auth().currentUser.uid;
     const categoryId = this.props.categoryId;
@@ -93,7 +109,7 @@ class AddInvoice extends Component {
             {this.renderTemplateFields()}
             <View style={styles.buttonContainer}>
               <PrimaryButton
-                onPress={this.onAdd.bind(this)}
+                onPress={this.onAddButtonClick.bind(this)}
                 title={i18n.t(keyValues.add_field)}
               />
             </View>
@@ -104,6 +120,10 @@ class AddInvoice extends Component {
                 title={invoices.createInvoiceLoading || invoices.updateInvoiceLoading ? i18n.t(keyValues.loading) : this.renderButtonTitle()}
               />
             </View>
+            {this.state.addModalActive ? <OpenModal 
+              visible= {this.state.addModalActive}
+              closeModal={this.closeModal.bind(this)}
+            ><View><Text>asasd</Text></View></OpenModal> : undefined}
           </MainCardContainer>
         </ScrollView>
       </KeyboardAvoidingView>
